@@ -15,7 +15,7 @@ def main():
     "NJ": "Trenton",
     "CO": "Denver"
   }
-  
+
   if len(sys.argv) == 2:
     state = states.get(sys.argv[1])
     capital = capital_cities.get(state)
