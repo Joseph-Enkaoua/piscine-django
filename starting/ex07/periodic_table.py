@@ -13,33 +13,28 @@ def parse_line_to_dict(line: str):
   return prop_dict
 
 
-def add_row_to_table(row_dict, body):
-  TEMPLATE = """
-      <tr>
-        <td style="border: 1px solid black; padding:10px">
-          <h4>{name}</h4>
-          <ul>No {number}</ul>
-          <ul>{small}</ul>
-          <ul>{molar}</ul>
-          <ul>{electron} electron</ul>
-          </ul>
-        </td>
-      </tr>
-"""
+def create_table_body(positions_dict):
+  rows = []
 
-  body += TEMPLATE.format(
-    name=row_dict['name'],
-    number=row_dict['number'],
-    small=row_dict['small'],
-    molar=row_dict['molar'],
-    electron=row_dict['electron']
-  )
+  for position, items in positions_dict.items():
+    row_content = ""
+    for item in items:
+      row_content += f"""
+      <td style="border: 1px solid black; padding:10px">
+        <h4>{item['name']}</h4>
+        <ul>No {item['number']}</ul>
+        <ul>{item['small']}</ul>
+        <ul>{item['molar']}</ul>
+        <ul>{item['electron']} electron</ul>
+      </td>
+      """
+    rows.append(f"<tr>{row_content}</tr>")
 
-  return body
+  return "\n".join(rows)
 
 
 def main():
-  HTML = """
+    HTML = """
 <!DOCTYPE html>
 <html>
   <head>
@@ -48,7 +43,7 @@ def main():
     <link rel="stylesheet" href="style.css">
     <title>periodic_table</title>
     <style>
-      table{{
+      table {{
         border-collapse: collapse;
       }}
       h4 {{
@@ -57,10 +52,6 @@ def main():
       ul {{
         list-style:none;
         padding-left:0px;
-      }}
-      td {{
-        border: 1px solid black;
-        padding:10px;
       }}
     </style>
   </head>
@@ -72,23 +63,24 @@ def main():
 </html>
 """
 
-  elements_dict = {}
-  body = ""
+    positions_dict = {}
 
-  with open('periodic_table.txt', 'r') as f:
-    for line in f:
-      if line.strip():
-        line_dict = parse_line_to_dict(line)
-        elements_dict[line_dict['name']] = line_dict
+    with open('periodic_table.txt', 'r') as f:
+      for line in f:
+        if line.strip():
+          line_dict = parse_line_to_dict(line)
+          position = line_dict['position']
+          if position not in positions_dict:
+            positions_dict[position] = []
+          positions_dict[position].append(line_dict)
 
-    elements_dict = dict(sorted(elements_dict.items(), key=lambda x: int(x[1]['position'])))
-    
-  for _, entry in elements_dict.items():
-    body = add_row_to_table(entry, body)
+    sorted_positions = dict(sorted(positions_dict.items(), key=lambda x: int(x[0])))
 
-  with open('periodic_table.html', 'w') as f:
-    f.write(HTML.format(body=body))
+    body = create_table_body(sorted_positions)
+
+    with open('periodic_table.html', 'w') as f:
+        f.write(HTML.format(body=body))
 
 
 if __name__ == '__main__':
-  main()
+    main()
