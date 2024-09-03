@@ -1,7 +1,5 @@
 #!/usr/bin/python3
 
-import sys
-
 def main():  
   d = {
     'Hendrix' : '1942',
