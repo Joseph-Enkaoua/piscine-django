@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title}</title>
+    <style>
+      body {{
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f4f4f4;
+      }}
+      .cv-container {{
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }}
+      h1 {{
+        font-size: 2.5em;
+        margin-bottom: 0.5em;
+        color: #333;
+      }}
+      p {{
+        font-size: 1.2em;
+        color: #666;
+        margin: 0.5em 0;
+      }}
+    </style>
+  </head>
+  <body>
+    <div class="cv-container">
+      <h1 style='text-align: center;'>{name} {surname}</h1>
+      <p>Age: {age}</p>
+      <p>Profession: {profession}</p>
+    </div>
+  </body>
+</html>
