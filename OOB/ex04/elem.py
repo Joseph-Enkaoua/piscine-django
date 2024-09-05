@@ -17,25 +17,34 @@ class Elem:
         def __init__(self) -> None:
             super().__init__("Validation didn't pass, inccorect behavior.")
 
-    def __init__(self, name, tag='div', attr={}, content=None, tag_type='double'):
+    def __init__(self, name=None, tag='div', attr={}, content=None, tag_type='double'):
+        if tag_type != 'double' and tag_type != 'simple':
+            raise Elem.ValidationError
+        if not (self.check_type(content) or content is None):
+            raise Elem.ValidationError
+        self.content = []
+        if type(content) == list:
+            self.content = content
+        elif content:
+            self.content.append(content)
         self.name = name
         self.tag = tag
         self.attr = attr
-        self.content = content
         self.tag_type = tag_type
 
     def __str__(self):
         """
         The __str__() method will permit us to make a plain HTML representation
         of our elements.
-        Make sure it renders everything (tag, attributes, embedded
-        elements...).
+        Make sure it renders everything (tag, attributes, embedded elements)
         """
-        result = ''
+        attr = self.__make_attr()
+        result = '<{tag}{attr}'.format(tag=self.tag, attr=attr)
         if self.tag_type == 'double':
-            result = self.tag
+            content = self.__make_content()
+            result += '>' + content + '</{tag}>'.format(tag=self.tag)
         elif self.tag_type == 'simple':
-            [...]
+            result += '/>'
         return result
 
     def __make_attr(self):
@@ -56,7 +65,7 @@ class Elem:
             return ''
         result = '\n'
         for elem in self.content:
-            result += [...]
+            result += '  ' + str(elem).replace('\n', '\n  ') + '\n'
         return result
 
     def add_content(self, content):
@@ -79,5 +88,9 @@ class Elem:
                                                 for elem in content])))
 
 
+def test():
+    html = Elem(content=Elem(content=Elem(Text('TTT'))))
+    print(html)
+
 if __name__ == '__main__':
-    [...]
+    test()
