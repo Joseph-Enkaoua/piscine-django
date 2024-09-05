@@ -53,7 +53,7 @@ class Elem:
         for elem in self.content:
             if len(str(elem)) != 0:
                 result += '  ' + str(elem).replace('\n', '\n  ') + '\n'
-        return result
+        return result.replace('&quot;', '"')
 
     def add_content(self, content):
         if not Elem.check_type(content):
