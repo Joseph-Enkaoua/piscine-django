@@ -400,3 +400,4 @@ FodyWeavers.xsd
 .DS_Store
 */.DS_Store
 /Lib/**/local_lib
+**/venv

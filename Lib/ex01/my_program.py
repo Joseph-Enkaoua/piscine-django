@@ -1,6 +1,6 @@
 #!usr/bin/python3
 
-from path import Path
+from path import Path # type: ignore
 
 
 def main():
