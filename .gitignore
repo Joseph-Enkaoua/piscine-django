@@ -401,3 +401,4 @@ FodyWeavers.xsd
 */.DS_Store
 /Lib/**/local_lib
 **/venv
+**/django_venv
