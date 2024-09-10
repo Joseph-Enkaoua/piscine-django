@@ -15,6 +15,7 @@ def get_page_content() -> str:
     "format": "json"
   }
 
+  # Get the first result with the request string
   R = S.get(url=URL, params=PARAMS)
   DATA = R.json()
 
@@ -32,6 +33,7 @@ def get_page_content() -> str:
     "redirects": "true"
   }
 
+  # Request the actual page of the first search result
   R2 = S.get(url=URL, params=PARAMS_CONTENT)
   content_dict = json.loads(R2.text)
   return dewiki.from_string(content_dict["parse"]["wikitext"]["*"])
