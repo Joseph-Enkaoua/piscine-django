@@ -3,4 +3,4 @@ source venv/bin/activate
 pip3 install -r requirement.txt
 
 
-# source venv/bin/activate && cd d05 && python manage.py runserver
+# source venv/bin/activate && python manage.py runserver

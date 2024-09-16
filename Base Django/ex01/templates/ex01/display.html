@@ -1,0 +1,28 @@
+{% extends "ex01/base.html" %}
+
+{% block title %}Ex01: Display process of a static page.{% endblock %}
+
+{% block style %} {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'style1.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div>
+  <h2>Process of Rendering a Static Web Page in Django</h2>
+  <ol>
+    <li><strong>User Request:</strong> The user enters a URL in the browser, triggering an HTTP request to the Django server.</li>
+    
+    <li><strong>URL Routing:</strong> Django matches the URL request to a corresponding view by looking at the URL patterns in the <code>urls.py</code>.</li>
+    
+    <li><strong>View Execution:</strong> The matched view function is called. This view processes the request and calls the <code>render()</code> function to load the desired template.</li>
+    
+    <li><strong>Template Lookup:</strong> Django searches for the template file in the configured template directories (e.g., <code>templates/</code> folder within the app).</li>
+    
+    <li><strong>Template Rendering:</strong> If the template is found, Django renders it, inserting dynamic content (if any) into the template.</li>
+    
+    <li><strong>Response Creation:</strong> Django generates an HTTP response with the rendered HTML and returns it to the browser.</li>
+    
+    <li><strong>Page Display:</strong> The browser receives the response and displays the HTML page to the user.</li>
+  </ol>
+</div>
+{% endblock %}

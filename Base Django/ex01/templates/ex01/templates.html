@@ -1,0 +1,81 @@
+{% extends "ex01/base.html" %}
+
+{% block title %}Ex01: Template engine.{% endblock %}
+
+{% block style %} {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'style2.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div>
+  <h2>Django's Default Template Engine</h2>
+  <p>
+    Django's default template engine is a system for dynamically generating HTML by combining static content with dynamic data.
+    It uses the Model-View-Template (MVT) pattern, separating business logic from presentation. The template engine allows embedding variables,
+    expressions, and control structures like loops (for) and conditionals (if) into HTML using simple syntax.
+    <br>
+    <br>
+    <b>Key features include:</b>
+    <br>
+    Variables: Displayed using &#123;&#123; variable &#125&#125, allowing dynamic data rendering.
+    <br>
+    Template Tags: &#123% %&#125 blocks for logic such as loops and conditionals.
+    <br>
+    Template Inheritance: Enables base templates with customizable blocks, allowing efficient reuse of layouts across multiple pages.
+  </p>
+  <h3>Template Blocks</h3>
+  <p>
+    Template blocks in Django allow sections of a template to be overridden by child templates, making them a key feature of template inheritance.
+    In a base template, you define a block with &#123 block block_name %&#125 and provide default content.
+    Child templates can then override these blocks by redefining them with &#123% block block_name %&#125 to insert custom content.
+    <br>
+    This helps maintain a consistent layout (like a header or footer) while allowing specific sections (like the page body) to be customized for different pages.
+  </p>
+  <h3>Loops "for ... in"</h3>
+  <p>
+    In Django templates, the "for ... in" loop is used to iterate over a list or queryset and display the content dynamically. The syntax is:
+    <br>
+    <br>
+    &#123% for item in items %&#125
+    <br>
+    &nbsp;&nbsp;&#123&#123 item &#125&#125
+    <br>
+    &#123% endfor %&#125
+    <br>
+    <br>
+    <code>item</code>: A variable representing each element in the list items.
+    <br>
+    <code>items</code>: A list or queryset passed from the view.
+    The loop will render content for each element, allowing for repetitive content generation, like displaying rows in a table or items in a list.
+  </p>
+  <h3>if control structures</h3>
+  <p>
+    In Django templates, if control structures allow you to conditionally display content based on certain conditions. The syntax is:
+    <br>
+    <br>
+    &#123% if <i>condition</i> %&#125
+    <br>
+    Content to display if the condition is true.
+    <br>
+    &#123% else %&#125
+    <br>
+    Content to display if the condition is false.
+    <br>
+    &#123% endif %&#125
+    <br>
+    <br>
+    <code>condition</code>: A variable or expression that evaluates to <code>True</code> or <code>False</code>.
+    <br>
+    <code>else</code> (optional): Defines content to display if the condition is false.
+    This allows for dynamic content rendering based on variable states, such as user authentication or data availability.
+  </p>
+  <h3>The display of the passing context variables</h3>
+  <p>
+    In Django templates, context variables passed from a view to a template are displayed using double curly braces &#123&#123 &#125&#125.
+    These variables can contain data like strings, numbers, objects, or querysets that are rendered in the template.
+    <br>
+    The context is typically a dictionary where keys correspond to variable names, and Django automatically renders the values in the template.
+    This allows for dynamic content to be injected into static HTML.
+  </p>
+</div>
+{% endblock %}
