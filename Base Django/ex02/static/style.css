@@ -1,0 +1,52 @@
+.page-title {
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(9, 158, 108);
+  color: aliceblue;
+  margin: 0px;
+}
+
+body {
+  margin: 0px;
+  margin-bottom: 100px;
+}
+
+h1, h2, h3 {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: darkslategrey;
+}
+
+ol, ul, p {
+  margin-left: 80px;
+  margin-right: 80px;
+  font-size: large;
+  list-style-type: none;
+}
+
+li {
+  padding: 20px;
+  font-size: large;
+}
+
+form {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+code {
+  background-color: darkgray;
+  color: aliceblue;
+  padding: 3px;
+  border-radius: 5px;
+}
+
+input {
+  font-size: medium;
+}
