@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fifty shades of bic</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'ex03/style.css' %}" />
+  </head>
+  <body>
+    <div class="content-wrapper">
+      <h1>Fifty shades of bic.</h1>
+      <br>
+      <table>
+        <tr>
+          <th>noir</th>
+          <th>rouge</th>
+          <th>bleu</th>
+          <th>vert</th>
+        </tr>
+        {% for line in table %}
+        <tr>
+          {% for column in line %}
+          <td style="background-color: {{ column }};"></td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </body>
+</html>
