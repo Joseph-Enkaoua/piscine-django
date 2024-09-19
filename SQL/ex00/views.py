@@ -23,10 +23,7 @@ def init(request):
         );
       """)
 
-  
-
     conn.commit()
-    cur.close()
     conn.close()
     return HttpResponse("OK")
 
