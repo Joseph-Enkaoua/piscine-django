@@ -402,3 +402,4 @@ FodyWeavers.xsd
 /Lib/**/local_lib
 **/venv
 **/django_venv
+**/djangotraining
