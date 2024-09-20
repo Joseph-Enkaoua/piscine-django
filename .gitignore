@@ -403,3 +403,5 @@ FodyWeavers.xsd
 **/venv
 **/django_venv
 **/djangotraining
+SQL/ex01/migrations/0001_initial.py
+SQL/ex03/migrations/0001_initial.py
