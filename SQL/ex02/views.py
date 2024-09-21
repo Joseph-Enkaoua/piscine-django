@@ -29,7 +29,8 @@ def init(request):
     return HttpResponse("OK")
 
   except Exception as e:
-    conn.close()
+    if conn:
+      conn.close()
     return HttpResponse(e)
   
 
@@ -121,7 +122,8 @@ def populate(request):
     return HttpResponse("<br/>".join(str(i) for i in results))
 
   except Exception as e:
-    conn.close()
+    if conn:
+      conn.close()
     return HttpResponse(e)
 
 
@@ -136,12 +138,13 @@ def display(request):
     )
 
     with conn.cursor() as cur:
-      cur.execute("""SELECT * FROM ex02_movies""")
+      cur.execute("SELECT * FROM ex02_movies")
       movies = cur.fetchall()
       conn.close()
       return render(request, 'ex02/display.html', {'movies': movies})
 
   except Exception as e:
-    conn.close()
+    if conn:
+      conn.close()
     return HttpResponse(e)
   

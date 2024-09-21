@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpResponse
 import psycopg2
 
 def init(request):
@@ -28,4 +28,6 @@ def init(request):
     return HttpResponse("OK")
 
   except Exception as e:
+    if conn:
+      conn.close()
     return HttpResponse(e)
