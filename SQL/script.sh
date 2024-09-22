@@ -1,6 +1,7 @@
 python3 -m venv venv
 source venv/bin/activate
 pip3 install -r requirement.txt
+python manage.py makemigrations
 python manage.py migrate
 
 # source venv/bin/activate && python manage.py runserver
