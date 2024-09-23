@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render # type: ignore
 from .models import Movies
-from django.http import HttpResponse
+from django.http import HttpResponse # type: ignore
 
 
 movies = [
