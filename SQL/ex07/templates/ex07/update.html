@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EX07 Update</title>
+    <style>
+      select {
+        margin: 20px;
+        padding: 10px;
+        font-size: 16px;
+      }
+      input {
+        padding: 10px;
+        font-size: 16px;
+      }
+      .update-form, h1, h2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body style="margin-top: 10%">
+    <h1>Update Movie</h1>
+    <h2>Choose a movie to update</h2>
+    <div class="update-form">
+      <form method="post">
+        {% csrf_token %}
+        <select name="movie">
+          {% for movie in movies %}
+          <option value="{{ movie.title }}">{{ movie.title }}</option>
+          {% endfor %}
+        </select>
+        <input type="text" name="opening_crawl" placeholder="Opening Crawl">
+        <input type="submit" value="Update">
+      </form>
+    </div>
+  </body>
+</html>
