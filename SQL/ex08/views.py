@@ -125,7 +125,6 @@ def parse_people():
         "mass": float(mass) if is_not_none(mass) else None,
         "homeworld": homeworld if is_not_none(homeworld) else None,
       }
-      print("homeworld", homeworld)
       people.append(person)
     return people
 
@@ -238,14 +237,16 @@ def display(request):
     )
 
     with conn.cursor() as cur:
-      cur.execute("SELECT * FROM ex08_planets")
-      planets = cur.fetchall()
-
-      cur.execute("SELECT * FROM ex08_people")
+      cur.execute("""SELECT ex08_people.name,
+                  ex08_people.homeworld,
+                  ex08_planets.climate
+                  FROM ex08_people JOIN ex08_planets
+                  ON ex08_people.homeworld = ex08_planets.name
+                  ORDER BY ex08_people.name""")
       people = cur.fetchall()
 
     conn.close()
-    return render(request, "ex08/display.html", {"planets": planets, "people": people})
+    return render(request, "ex08/display.html", {"people": people})
   
   except Exception:
     if conn:

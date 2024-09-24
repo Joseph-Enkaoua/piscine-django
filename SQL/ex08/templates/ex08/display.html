@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ex08 Display</title>
+    <style>
+      td {
+        padding: 0 40px;
+      }
+      body {
+        padding: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+      }
+    </style>
+  </head>
+  <body>
+    <table>
+      <tbody>
+        <tr>
+          <th>Name</th>
+          <th>Homeland</th>
+          <th>Climate</th>
+        </tr>
+        {% for person in people %}
+        <tr>
+          <td>{{ person.0 }}</td>
+          <td>{{ person.1 }}</td>
+          <td>{{ person.2 }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>
