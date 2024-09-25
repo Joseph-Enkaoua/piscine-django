@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render
 from django.conf import settings
 from django.http import HttpResponse
@@ -26,12 +27,13 @@ def init(request):
 
     conn.commit()
     conn.close()
-    return HttpResponse("OK")
+    messages.success(request, "OK, Table ex02_movies created successfully")
 
   except Exception as e:
     if conn:
       conn.close()
-    return HttpResponse(e)
+    messages.error(request, f"KO {str(e)}")
+  return render(request, 'ex02/display.html')
   
 
 def populate(request):
@@ -96,8 +98,6 @@ def populate(request):
       },
     ]
 
-    results = []
-
     cur = conn.cursor()
 
     for movie in movies:
@@ -113,18 +113,18 @@ def populate(request):
           )
         )
         conn.commit()
-        results.append("OK")
+        messages.success(request, f"OK, {movie['title']} added successfully")
       except Exception as e:
-        results.append(str(e))
+        messages.error(request, f"KO {str(e)}")
         conn.rollback()
 
     conn.close()
-    return HttpResponse("<br/>".join(str(i) for i in results))
 
   except Exception as e:
     if conn:
       conn.close()
-    return HttpResponse(e)
+    messages.error(request, f"KO {str(e)}")
+  return render(request, 'ex02/display.html')
 
 
 def display(request):
@@ -146,5 +146,6 @@ def display(request):
   except Exception as e:
     if conn:
       conn.close()
-    return HttpResponse(e)
+    messages.error(request, f"KO {str(e)}")
+  return render(request, 'ex02/display.html')
   
