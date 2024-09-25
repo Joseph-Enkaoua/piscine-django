@@ -1,5 +1,5 @@
+from django.contrib import messages
 from django.shortcuts import render
-from django.http import HttpResponse
 from .models import Movies
 
 
@@ -56,7 +56,6 @@ def populate(request):
     }
   ]
 
-  results = []
   for movie in movies:
     try:
       Movies.objects.create(
@@ -66,18 +65,18 @@ def populate(request):
         producer=movie['producer'],
         release_date=movie['release_date']
       )
-      results.append("OK<br/>")
+      messages.success(request, f"OK, Movie {movie['title']} added")
     except Exception as e:
-      results.append(f"Error: {e}<br/>")
+      messages.error(request, f"Error: {e}")
 
-  return HttpResponse(results)
-
+  return render(request, 'ex03/index.html', {'title': 'ex03 Populate'})
 
 def display(request):
-    try:
-        movies = Movies.objects.all()
-        if not movies:
-            raise Movies.DoesNotExist
-        return render(request, 'ex03/display.html', {"movies": movies})
-    except:
-        return HttpResponse("No data available movies")
+  try:
+    movies = Movies.objects.all()
+    if not movies:
+        raise Movies.DoesNotExist
+    return render(request, 'ex03/index.html', {'movies': movies, 'title': 'ex03 Display'})
+  except:
+    messages.error(request, "No data available")
+    return render(request, 'ex03/index.html', {'title': 'ex03 Display'})

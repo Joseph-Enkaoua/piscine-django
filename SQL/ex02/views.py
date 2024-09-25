@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.shortcuts import render
 from django.conf import settings
-from django.http import HttpResponse
 import psycopg2
 
 def init(request):
@@ -15,7 +14,7 @@ def init(request):
     )
 
     with conn.cursor() as cur:
-      cur.execute("""CREATE TABLE IF NOT EXISTS ex02_movies (
+      cur.execute("""CREATE TABLE ex02_movies (
         title VARCHAR(64) NOT NULL UNIQUE,
         episode_nb INT PRIMARY KEY,
         opening_crawl TEXT,
@@ -33,7 +32,7 @@ def init(request):
     if conn:
       conn.close()
     messages.error(request, f"KO {str(e)}")
-  return render(request, 'ex02/display.html')
+  return render(request, 'ex02/display.html', {'title': 'Init ex02_movies'})
   
 
 def populate(request):
@@ -124,7 +123,7 @@ def populate(request):
     if conn:
       conn.close()
     messages.error(request, f"KO {str(e)}")
-  return render(request, 'ex02/display.html')
+  return render(request, 'ex02/display.html', {'title': 'Populate ex02_movies'})
 
 
 def display(request):
@@ -141,11 +140,11 @@ def display(request):
       cur.execute("SELECT * FROM ex02_movies")
       movies = cur.fetchall()
       conn.close()
-      return render(request, 'ex02/display.html', {'movies': movies})
+      return render(request, 'ex02/display.html', {'movies': movies, 'title': 'Display ex02_movies'})
 
   except Exception as e:
     if conn:
       conn.close()
     messages.error(request, f"KO {str(e)}")
-  return render(request, 'ex02/display.html')
+    return render(request, 'ex02/display.html', {'title': 'Display ex02_movies'})
   

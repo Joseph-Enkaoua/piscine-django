@@ -1,28 +1,25 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EX04 Remove</title>
-    <style>
-      select {
-        margin: 20px;
-        padding: 10px;
-        font-size: 16px;
-      }
-      input {
-        padding: 10px;
-        font-size: 16px;
-      }
-      .remove-form, h1, h2 {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
   </head>
-  <body style="margin-top: 10%">
+<body>
+
+  <hr>
+
+  {% if messages %}
+    {% for message in messages %}
+      <h3>{{ message }}</h3>
+      {% if not forloop.last %}
+        <br>
+      {% endif %}
+    {% endfor %}
+    <hr>
+  {% elif movies %}
     <h1>Remove Movie</h1>
     <h2>Choose a movie to remove</h2>
     <div class="remove-form">
@@ -33,8 +30,11 @@
           <option value="{{ movie.0 }}">{{ movie.0 }}</option>
           {% endfor %}
         </select>
-        <input type="submit" value="Remove">
+        <input style="margin-top: 5%;" type="submit" value="Remove">
       </form>
     </div>
+    <hr>
+  {% endif %}
+
   </body>
 </html>

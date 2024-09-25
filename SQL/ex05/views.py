@@ -1,7 +1,6 @@
+from django.contrib import messages # type: ignore
 from django.shortcuts import render # type: ignore
 from .models import Movies
-from django.http import HttpResponse # type: ignore
-
 
 movies = [
   {
@@ -57,7 +56,6 @@ movies = [
 
 
 def populate(request):
-  results = []
   for movie in movies:
     try:
       Movies.objects.update_or_create(
@@ -69,11 +67,11 @@ def populate(request):
           'release_date': movie['release_date']
         }
       )
-      results.append("OK<br/>")
+      messages.success(request, f"{movie['title']} added successfully")
     except Exception as e:
-      results.append(f"Error: {e}<br/>")
+      messages.error(request, f"Error: {e}")
 
-  return HttpResponse(results)
+  return render(request, 'ex05/index.html', {'title': 'ex05 Populate'})
 
 
 def display(request):
@@ -81,9 +79,10 @@ def display(request):
     movies = Movies.objects.all()
     if not movies:
       raise Movies.DoesNotExist
-    return render(request, 'ex05/display.html', {'movies': movies})
+    return render(request, 'ex05/index.html', {'movies': movies, 'title': 'ex05 Display'})
   except Exception:
-    return HttpResponse("No data available")
+    messages.error(request, "No data available")
+    return render(request, 'ex05/index.html', {'title': 'ex05 Display'})
 
 
 def remove(request):
@@ -95,6 +94,7 @@ def remove(request):
     movies = Movies.objects.all()
     if not movies:
       raise Movies.DoesNotExist
-    return render(request, 'ex05/remove.html', {'movies': movies})
+    return render(request, 'ex05/remove.html', {'movies': movies, 'title': 'ex05 Remove'})
   except Exception:
-    return HttpResponse("No data available")
+    messages.error(request, "No data available")
+    return render(request, 'ex05/remove.html', {'title': 'ex05 Remove'})

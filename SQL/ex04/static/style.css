@@ -1,0 +1,164 @@
+body {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h1 {
+    color: #424242;
+    font-family: 'Arial', sans-serif;
+    font-size: 21pt;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 5px 0;
+}
+
+h2 {
+    color: black;
+    font-family: 'Arial', sans-serif;
+    font-size: 14pt;
+    text-transform: uppercase;
+    font-weight: lighter;
+    margin: 5px 0;
+}
+
+h3 {
+    color: black;
+    font-family: 'Arial', sans-serif;
+    font-size: 10pt;
+    text-transform: uppercase;
+    clear: both;
+    margin: 0 0;
+    text-align: center;
+}
+
+p, a {
+    color: black;
+    font-family: 'Arial', sans-serif;
+    font-size: 10pt;
+    text-align: center;
+    text-decoration: none;
+}
+
+strong {
+    color: #424242;
+    font-family: 'Arial', sans-serif;
+    font-size: 10pt;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+hr {
+    color: black;
+    width: 100%;
+    margin: 10px 0;
+}
+
+ul {
+    list-style-type: none;
+    padding: 20px;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 600px;
+    width: 100%;
+}
+
+li {
+    flex: 1 1 calc(50% - 40px);
+    font-family: 'Arial', sans-serif;
+    font-size: 12pt;
+    text-align: center;
+    color: #424242;
+    box-sizing: border-box;
+    padding: 5px;
+}
+
+li:last-child {
+    border-bottom: none;
+}
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 20px 0;
+}
+
+th, td {
+    height: 40px;
+    width: 80px;
+    text-align: center;
+    border: 1px solid #ddd;
+    padding: 0;
+}
+
+
+th {
+    font-family: 'Arial', sans-serif;
+    font-size: 12pt;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+td {
+    font-family: 'Arial', sans-serif;
+    font-size: 10pt;
+}
+
+thead th {
+    background-color: #424242; /* Dark background for headers */
+}
+
+table {
+    min-width: 320px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+}
+
+form p {
+    margin: 0;
+    font-size: 10pt;
+    color: #424242;
+}
+
+form button {
+    background-color: #424242;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-family: 'Arial', sans-serif;
+    font-size: 10pt;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+form button:hover {
+    background-color: #333;
+}
+
+
+.header {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

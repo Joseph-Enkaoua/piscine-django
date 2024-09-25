@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.conf import settings
 from django.http import HttpResponse
 import psycopg2

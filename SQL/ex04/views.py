@@ -1,5 +1,5 @@
+from django.contrib import messages
 from django.shortcuts import render
-from django.http import HttpResponse
 import psycopg2
 from django.conf import settings
 from django.views.decorators.http import require_http_methods
@@ -68,7 +68,7 @@ def init(request):
     )
 
     with conn.cursor() as cur:
-      cur.execute("""CREATE TABLE IF NOT EXISTS ex04_movies (
+      cur.execute("""CREATE TABLE ex04_movies (
         title VARCHAR(64) NOT NULL UNIQUE,
         episode_nb INT PRIMARY KEY,
         opening_crawl TEXT,
@@ -80,12 +80,13 @@ def init(request):
 
     conn.commit()
     conn.close()
-    return HttpResponse("OK")
+    messages.success(request, "Table ex04_movies created")
 
   except Exception as e:
     if conn:
       conn.close()
-    return HttpResponse(e)
+    messages.error(request, f"Error: {e}")
+  return render(request, 'ex04/index.html', {'title': 'Init ex04_movies'})
 
 
 def populate(request):
@@ -97,9 +98,6 @@ def populate(request):
       user=settings.DATABASES['default']['USER'],
       password=settings.DATABASES['default']['PASSWORD'],
     )
-
-
-    results = []
 
     cur = conn.cursor()
 
@@ -122,18 +120,18 @@ def populate(request):
           )
         )
         conn.commit()
-        results.append("OK")
+        messages.success(request, f"OK, Movie {movie['title']} updated")
       except Exception as e:
-        results.append(str(e))
+        messages.error(request, f"Error: {e}")
         conn.rollback()
 
     conn.close()
-    return HttpResponse("<br/>".join(str(i) for i in results))
 
   except Exception as e:
     if conn:
       conn.close()
-    return HttpResponse(e)
+    messages.error(request, f"Error: {e}")
+  return render(request, 'ex04/index.html', {'title': 'Populate ex04_movies'})
 
 
 def display(request):
@@ -152,12 +150,13 @@ def display(request):
       if not movies:
         raise Exception("No data available")
       conn.close()
-      return render(request, 'ex04/display.html', {'movies': movies})
+      return render(request, 'ex04/index.html', {'movies': movies, 'title': 'Display ex04_movies'})
 
   except Exception:
     if conn:
       conn.close()
-    return HttpResponse("No data available")
+    messages.error(request, "No data available")
+    return render(request, 'ex04/index.html', {'title': 'Display ex04_movies'})
 
 
 @require_http_methods(["GET", "POST"])
@@ -180,11 +179,12 @@ def remove(request):
       cur.execute("SELECT * FROM ex04_movies")
       movies = cur.fetchall()
       if not movies:
-        raise Exception("No data available")
+        raise Exception()
 
-    return render(request, 'ex04/remove.html', {'movies': movies})
+    return render(request, 'ex04/remove.html', {'movies': movies, 'title': 'Remove ex04_movies'})
 
   except Exception as e:
     if conn:
       conn.close()
-    return HttpResponse("No data available")
+    messages.error(request, "No data available")
+    return render(request, 'ex04/remove.html', {'title': 'Remove ex04_movies'})
