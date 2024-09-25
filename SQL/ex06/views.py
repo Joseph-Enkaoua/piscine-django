@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.http import HttpResponse
@@ -93,12 +94,13 @@ def init(request):
 
     conn.commit()
     conn.close()
-    return HttpResponse("OK")
+    messages.success(request, "Table ex06_movies created")
 
   except Exception as e:
     if conn:
       conn.close()
-    return HttpResponse(e)
+    messages.error(request, str(e))
+  return render(request, 'ex06/display.html', {'title': 'Init ex06'})
 
 
 def populate(request):
@@ -111,22 +113,13 @@ def populate(request):
       password=settings.DATABASES['default']['PASSWORD'],
     )
 
-
-    results = []
-
     cur = conn.cursor()
 
     for movie in movies:
       try:
         cur.execute("""
           INSERT INTO ex06_movies (episode_nb, title, director, producer, release_date)
-          VALUES (%s, %s, %s, %s, %s)
-          ON CONFLICT (episode_nb) DO UPDATE SET
-          title = EXCLUDED.title,
-          director = EXCLUDED.director,
-          producer = EXCLUDED.producer,
-          release_date = EXCLUDED.release_date
-        """, (
+          VALUES (%s, %s, %s, %s, %s)""", (
             movie["episode_nb"],
             movie["title"],
             movie["director"],
@@ -135,18 +128,17 @@ def populate(request):
           )
         )
         conn.commit()
-        results.append("OK")
+        messages.success(request, f"OK - Insert {movie['title']} successful")
       except Exception as e:
-        results.append(str(e))
+        messages.error(request, f"Error - Insert {movie['title']} failed: {str(e)}")
         conn.rollback()
-
     conn.close()
-    return HttpResponse("<br/>".join(str(i) for i in results))
 
   except Exception as e:
     if conn:
       conn.close()
-    return HttpResponse(e)
+    messages.error(request, str(e))
+  return render(request, 'ex06/display.html', {'title': 'Populate ex06'})
 
 
 def display(request):
@@ -162,15 +154,14 @@ def display(request):
     with conn.cursor() as cur:
       cur.execute("SELECT * FROM ex06_movies ORDER BY episode_nb")
       movies = cur.fetchall()
-      if not movies:
-        raise Exception("No data available")
       conn.close()
-      return render(request, 'ex06/display.html', {'movies': movies})
+      return render(request, 'ex06/display.html', {'movies': movies, 'title': 'Display ex06'})
 
   except Exception:
     if conn:
       conn.close()
-    return HttpResponse("No data available")
+    messages.error(request, "No data available")
+    return render(request, 'ex06/display.html', {'title': 'Display ex06'})
 
 
 def update(request):
@@ -203,9 +194,10 @@ def update(request):
           return redirect('/ex06/display')
 
       conn.close()
-      return render(request, 'ex06/update.html', {'movies': movies})
+      return render(request, 'ex06/update.html', {'movies': movies, 'title': 'Update ex06'})
 
   except:
     if conn:
       conn.close()
-    return HttpResponse("No data available")
+    messages.error(request, "No data available")
+    return render(request, 'ex06/update.html', {'title': 'Update ex06'})
