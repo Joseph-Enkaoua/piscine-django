@@ -1,88 +1,42 @@
+from django.contrib import messages # type: ignore
 from django.shortcuts import render, redirect # type: ignore
 from .models import Movies
-from django.http import HttpResponse # type: ignore
 
 movies = [
-  {
-    "episode_nb": 1,
-    "title": "The Phantom Menace",
-    "director": "George Lucas",
-    "producer": "Rick McCallum",
-    "release_date": "1999-05-19",
-  },
-  {
-    "episode_nb": 2,
-    "title": "Attack of the Clones",
-    "director": "George Lucas",
-    "producer": "Rick McCallum",
-    "release_date": "2002-05-16",
-  },
-  {
-    "episode_nb": 3,
-    "title": "Revenge of the Sith",
-    "director": "George Lucas",
-    "producer": "Rick McCallum",
-    "release_date": "2005-05-19",
-  },
-  {
-    "episode_nb": 4,
-    "title": "A New Hope",
-    "director": "George Lucas",
-    "producer": "Gary Kurtz, Rick McCallum",
-    "release_date": "1977-05-25",
-  },
-  {
-    "episode_nb": 5,
-    "title": "The Empire Strikes Back",
-    "director": "Irvin Kershner",
-    "producer": "Gary Kurtz, Rick McCallum",
-    "release_date": "1980-05-17",
-  },
-  {
-    "episode_nb": 6,
-    "title": "Return of the Jedi",
-    "director": "Richard Marquand",
-    "producer": "Howard G. Kazanjian, George Lucas, Rick McCallum",
-    "release_date": "1983-05-25",
-  },
-  {
-    "episode_nb": 7,
-    "title": "The Force Awakens",
-    "director": "J. J. Abrams",
-    "producer": "Kathleen Kennedy, J. J. Abrams, Bryan Burk",
-    "release_date": "2015-12-11",
-  },
+  (1, 'The Phantom Menace', 'George Lucas', 'Rick McCallum', '1999-07-19'),
+  (2, 'Attack of the Clones', 'George Lucas', 'Rick McCallum', '2002-07-16'),
+  (3, 'Revenge of the Sith', 'George Lucas', 'Rick McCallum', '2007-07-19'),
+  (4, 'A New Hope', 'George Lucas', 'Gary Kurtz, Rick McCallum', '1977-07-25'),
+  (5, 'The Empire Strikes Back', 'Irvin Kershner', 'Gary Kurtz, Rick McCallum', '1980-07-17'),
+  (6, 'Return of the Jedi', 'Richard Marquand', 'Howard G. Kazanjian, George Lucas, Rick McCallum', '1983-07-25'),
+  (7, 'The Force Awakens', 'J. J. Abrams', 'Kathleen Kennedy, J. J. Abrams, Bryan Burk', '2015-12-11'),
 ]
 
 
 def populate(request):
-  results = []
   for movie in movies:
     try:
-      Movies.objects.update_or_create(
-        title=movie['title'],
-        defaults={
-          'episode_nb': movie['episode_nb'],
-          'director': movie['director'],
-          'producer': movie['producer'],
-          'release_date': movie['release_date']
-        }
+      Movies.objects.create(
+        episode_nb=movie[0],
+        title=movie[1],
+        director=movie[2],
+        producer=movie[3],
+        release_date=movie[4],
       )
-      results.append("OK<br/>")
+      messages.success(request, f"OK - {movie[1]} added")
     except Exception as e:
-      results.append(f"Error: {e}<br/>")
+      messages.error(request, f"KO - {movie[1]} - {e}")
 
-  return HttpResponse(results)
+  return render(request, 'ex07/display.html', {'title': 'Populate ex07'})
 
 
 def display(request):
   try:
     movies = Movies.objects.all().order_by('episode_nb')
-    if not movies:
-      raise Movies.DoesNotExist
-    return render(request, 'ex07/display.html', {'movies': movies})
+    return render(request, 'ex07/display.html', {'movies': movies, 'title': 'Display ex07'})
   except Exception:
-    return HttpResponse("No data available")
+    messages.error(request, "No data available")
+    return render(request, 'ex07/display.html', {'title': 'Display ex07'})
 
 
 def update(request):
@@ -96,8 +50,7 @@ def update(request):
         movie.save()
       return redirect('/ex07/display')
     movies = Movies.objects.all().order_by('episode_nb')
-    if not movies:
-      raise Movies.DoesNotExist
-    return render(request, 'ex07/update.html', {'movies': movies})
+    return render(request, 'ex07/update.html', {'movies': movies, 'title': 'Update ex07'})
   except Exception:
-    return HttpResponse("No data available")
+    messages.error(request, "No data available")
+    return render(request, 'ex07/update.html', {'title': 'Update ex07'})

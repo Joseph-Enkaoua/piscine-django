@@ -3,55 +3,13 @@ from django.shortcuts import render # type: ignore
 from .models import Movies
 
 movies = [
-  {
-    'episode_nb': 1,
-    'title': 'The Phantom Menace',
-    'director': 'George Lucas',
-    'producer': 'Rick McCallum',
-    'release_date': '1999-05-19'
-  },
-  {
-    'episode_nb': 2,
-    'title': 'Attack of the Clones',
-    'director': 'George Lucas',
-    'producer': 'Rick McCallum',
-    'release_date': '2002-05-16'
-  },
-  {
-    'episode_nb': 3,
-    'title': 'Revenge of the Sith',
-    'director': 'George Lucas',
-    'producer': 'Rick McCallum',
-    'release_date': '2005-05-19'
-  },
-  {
-    'episode_nb': 4,
-    'title': 'A New Hope',
-    'director': 'George Lucas',
-    'producer': 'Gary Kurtz, Rick McCallum',
-    'release_date': '1977-05-25'
-  },
-  {
-    'episode_nb': 5,
-    'title': 'The Empire Strikes Back',
-    'director': 'Irvin Kershner',
-    'producer': 'Gary Kurtz, Rick McCallum',
-    'release_date': '1980-05-17'
-  },
-  {
-    'episode_nb': 6,
-    'title': 'Return of the Jedi',
-    'director': 'Richard Marquand',
-    'producer': 'Howard G. Kazanjian, George Lucas, Rick McCallum',
-    'release_date': '1983-05-25'
-  },
-  {
-    'episode_nb': 7,
-    'title': 'The Force Awakens',
-    'director': 'J.J. Abrams',
-    'producer': 'Kathleen Kennedy, J.J. Abrams, Bryan Burk',
-    'release_date': '2015-12-11'
-  }
+  (1, 'The Phantom Menace', 'George Lucas', 'Rick McCallum', '1999-05-19'),
+  (2, 'Attack of the Clones', 'George Lucas', 'Rick McCallum', '2002-05-16'),
+  (3, 'Revenge of the Sith', 'George Lucas', 'Rick McCallum', '2005-05-19'),
+  (4, 'A New Hope', 'George Lucas', 'Gary Kurtz, Rick McCallum', '1977-05-25'),
+  (5, 'The Empire Strikes Back', 'Irvin Kershner', 'Gary Kurtz, Rick McCallum', '1980-05-17'),
+  (6, 'Return of the Jedi', 'Richard Marquand', 'Howard G. Kazanjian, George Lucas, Rick McCallum', '1983-05-25'),
+  (7, 'The Force Awakens', 'J.J. Abrams', 'Kathleen Kennedy, J.J. Abrams, Bryan Burk', '2015-12-11')
 ]
 
 
@@ -59,12 +17,12 @@ def populate(request):
   for movie in movies:
     try:
       Movies.objects.update_or_create(
-        title=movie['title'],
+        title=movie[1],
         defaults={
-          'episode_nb': movie['episode_nb'],
-          'director': movie['director'],
-          'producer': movie['producer'],
-          'release_date': movie['release_date']
+          'episode_nb': movie[0],
+          'director': movie[2],
+          'producer': movie[3],
+          'release_date': movie[4]
         }
       )
       messages.success(request, f"{movie['title']} added successfully")
@@ -77,8 +35,6 @@ def populate(request):
 def display(request):
   try:
     movies = Movies.objects.all()
-    if not movies:
-      raise Movies.DoesNotExist
     return render(request, 'ex05/index.html', {'movies': movies, 'title': 'ex05 Display'})
   except Exception:
     messages.error(request, "No data available")

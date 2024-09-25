@@ -3,6 +3,17 @@ from django.shortcuts import render
 from django.conf import settings
 import psycopg2
 
+movies = [
+  (1, "The Phantom Menace", "George Lucas", "Rick McCallum", "1999-05-19"),
+  (2, "Attack of the Clones", "George Lucas", "Rick McCallum", "2002-05-16"),
+  (3, "Revenge of the Sith", "George Lucas", "Rick McCallum", "2005-05-19"),
+  (4, "A New Hope", "George Lucas", "Gary Kurtz, Rick McCallum", "1977-05-25"),
+  (5, "The Empire Strikes Back", "Irvin Kershner", "Gary Kurtz, Rick McCallum", "1980-05-17"),
+  (6, "Return of the Jedi", "Richard Marquand", "Howard G. Kazanjian, George Lucas, Rick McCallum", "1983-05-25"),
+  (7, "The Force Awakens", "J. J. Abrams", "Kathleen Kennedy, J. J. Abrams, Bryan Burk", "2015-12-11"),
+]
+
+
 def init(request):
   try:
     conn = psycopg2.connect(
@@ -45,71 +56,13 @@ def populate(request):
       password=settings.DATABASES['default']['PASSWORD'],
     )
 
-    movies = [
-      {
-        "episode_nb": 1,
-        "title": "The Phantom Menace",
-        "director": "George Lucas",
-        "producer": "Rick McCallum",
-        "release_date": "1999-05-19",
-      },
-      {
-        "episode_nb": 2,
-        "title": "Attack of the Clones",
-        "director": "George Lucas",
-        "producer": "Rick McCallum",
-        "release_date": "2002-05-16",
-      },
-      {
-        "episode_nb": 3,
-        "title": "Revenge of the Sith",
-        "director": "George Lucas",
-        "producer": "Rick McCallum",
-        "release_date": "2005-05-19",
-      },
-      {
-        "episode_nb": 4,
-        "title": "A New Hope",
-        "director": "George Lucas",
-        "producer": "Gary Kurtz, Rick McCallum",
-        "release_date": "1977-05-25",
-      },
-      {
-        "episode_nb": 5,
-        "title": "The Empire Strikes Back",
-        "director": "Irvin Kershner",
-        "producer": "Gary Kurtz, Rick McCallum",
-        "release_date": "1980-05-17",
-      },
-      {
-        "episode_nb": 6,
-        "title": "Return of the Jedi",
-        "director": "Richard Marquand",
-        "producer": "Howard G. Kazanjian, George Lucas, Rick McCallum",
-        "release_date": "1983-05-25",
-      },
-      {
-        "episode_nb": 7,
-        "title": "The Force Awakens",
-        "director": "J. J. Abrams",
-        "producer": "Kathleen Kennedy, J. J. Abrams, Bryan Burk",
-        "release_date": "2015-12-11",
-      },
-    ]
-
     cur = conn.cursor()
 
     for movie in movies:
       try:
         cur.execute("""
           INSERT INTO ex02_movies (episode_nb, title, director, producer, release_date)
-          VALUES (%s, %s, %s, %s, %s)""", (
-            movie["episode_nb"],
-            movie["title"],
-            movie["director"],
-            movie["producer"],
-            movie["release_date"],
-          )
+          VALUES (%s, %s, %s, %s, %s)""", (movie[0], movie[1], movie[2], movie[3], movie[4])
         )
         conn.commit()
         messages.success(request, f"OK, {movie['title']} added successfully")
