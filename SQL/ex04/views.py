@@ -71,7 +71,7 @@ def populate(request):
           release_date = EXCLUDED.release_date
         """, (movie[0], movie[1], movie[2], movie[3], movie[4],))
         conn.commit()
-        messages.success(request, f"OK, Movie {movie['title']} updated")
+        messages.success(request, f"OK, Movie {movie[1]} updated")
       except Exception as e:
         messages.error(request, f"Error: {e}")
         conn.rollback()
