@@ -79,9 +79,9 @@ def populate(request):
           VALUES (%s, %s, %s, %s, %s)""", (movie[0], movie[1], movie[2], movie[3], movie[4],)
         )
         conn.commit()
-        messages.success(request, f"OK - Insert {movie['title']} successful")
+        messages.success(request, f"OK - Insert {movie[1]} successful")
       except Exception as e:
-        messages.error(request, f"Error - Insert {movie['title']} failed: {str(e)}")
+        messages.error(request, f"Error - Insert {movie[1]} failed: {str(e)}")
         conn.rollback()
     conn.close()
 
