@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+  </head>
+  <body>
+
+  <div class="header">
+    <h1>{{ title }}</h1>
+    <p>Welcome to the planet and people database. Here you'll be able to see all the characters’ names, their homeworld as well as the climate, which is windy or moderately windy sorted in character’s name alphabetical order.</p>
+  </div>
+
+  <hr>
+
+  {% if messages %}
+    {% for message in messages %}
+      <h3>{{ message }}</h3>
+      {% if not forloop.last %}
+        <br>
+      {% endif %}
+    {% endfor %}
+    <hr>
+  {% elif people %}
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Homeland</th>
+          <th>Climate</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for person in people %}
+          <tr>
+            <td>{{ person.0 }}</td>
+            <td>{{ person.1 }}</td>
+            <td>{{ person.2 }}</td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="3">No data available.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <hr>
+  {% endif %}
+
+  </body>
+</html>
