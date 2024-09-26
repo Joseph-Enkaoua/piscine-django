@@ -1,10 +1,12 @@
 python3 -m venv venv
+sudo docker-compose up -d
 source venv/bin/activate
 pip3 install -r requirement.txt
-python manage.py makemigrations
-python manage.py migrate
+python3 manage.py makemigrations
+python3 manage.py migrate
+python3 manage.py runserver
 
 # source venv/bin/activate && python manage.py runserver
-# docker-compose -f docker-compose.yml up -d
+# docker-compose up -d
 # docker exec -it sql-db-1 sh
 # psql -U djangouser -d djangotraining (-h HOST -p PORT if not from container)

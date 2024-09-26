@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'ex06',
     'ex07',
     'ex08',
-    'ex09',
+    # 'ex09',
 ]
 
 MIDDLEWARE = [
@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'd05.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'djangotraining',
         'USER': 'djangouser',
         'PASSWORD': 'secret',

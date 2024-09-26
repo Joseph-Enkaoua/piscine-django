@@ -33,6 +33,8 @@ def populate(request):
 def display(request):
   try:
     movies = Movies.objects.all().order_by('episode_nb')
+    if not movies:
+      raise Movies.DoesNotExist
     return render(request, 'ex07/display.html', {'movies': movies, 'title': 'Display ex07'})
   except Exception:
     messages.error(request, "No data available")

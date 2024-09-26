@@ -23,15 +23,18 @@ def populate(request):
         producer=movie[3],
         release_date=movie[4]
       )
-      messages.success(request, f"OK, Movie {movie['title']} added")
+      messages.success(request, f"OK, Movie {movie[1]} added")
     except Exception as e:
       messages.error(request, f"Error: {e}")
 
   return render(request, 'ex03/index.html', {'title': 'ex03 Populate'})
 
+
 def display(request):
   try:
     movies = Movies.objects.all()
+    if not movies:
+      raise Exception()
     return render(request, 'ex03/index.html', {'movies': movies, 'title': 'ex03 Display'})
   except:
     messages.error(request, "No data available")
