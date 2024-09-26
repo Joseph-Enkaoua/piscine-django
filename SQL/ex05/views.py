@@ -25,7 +25,7 @@ def populate(request):
           'release_date': movie[4]
         }
       )
-      messages.success(request, f"{movie['title']} added successfully")
+      messages.success(request, f"{movie[1]} updated successfully")
     except Exception as e:
       messages.error(request, f"Error: {e}")
 
