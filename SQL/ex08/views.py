@@ -42,7 +42,7 @@ def init(request):
 
     conn.commit()
     conn.close()
-    messages.success('OK - created ex08_planets table and ex08_people table')
+    messages.success(request, 'OK - created ex08_planets table and ex08_people table')
     return render(request, 'ex08/display.html', {'title': 'Init Ex08'})
 
   except Exception as e:
