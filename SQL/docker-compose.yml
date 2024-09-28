@@ -4,6 +4,7 @@ services:
   db:
     image: postgres:latest
     restart: always
+    container_name: postgres
     environment:
       - POSTGRES_DB=djangotraining
       - POSTGRES_USER=djangouser
