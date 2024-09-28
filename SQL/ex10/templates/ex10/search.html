@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Movies ex10</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+  </head>
+  <body>
+
+    <div class="header">
+      <h1>Search Movies Ex10</h1>
+      <p>Welcome to the planet and people database. Here you'll be able to search movies throught different criteria.</p>
+    </div>
+
+    <hr>
+
+    {% if messages %}
+      <br>
+      {% for message in messages %}
+        <h3>{{ message }}</h3>
+      {% endfor %}
+      <br>
+      <a href="/ex10">Search again</a>
+      <br>
+    {% elif data %}
+      <h3>Search Results:</h3>
+      <ul>
+        {% for movie in data %}
+        <li>
+          {% for elem in movie %}
+          {{ elem }}{% if not forloop.last %} - {% endif %}
+          {% endfor %}
+        </li>
+        {% endfor %}
+      </ul>
+      <a href="/ex10">Search again</a>
+    {% else %}
+      <form>
+        {{ form.as_p }}
+        <button type="submit">Search</button>
+      </form>
+    {% endif %}
+
+    <hr>
+  </body>
+</html>
