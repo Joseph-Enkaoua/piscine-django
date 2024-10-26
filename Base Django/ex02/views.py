@@ -1,4 +1,5 @@
 import logging
+import os
 from django.shortcuts import render, redirect
 from django.conf import settings
 
@@ -6,6 +7,11 @@ from .forms import TextForm
 
 
 def index(request):
+  if not os.path.exists(settings.HISTORY_LOG_FILE):
+    open(settings.HISTORY_LOG_FILE, 'a')
+
+  logging.config.dictConfig(settings.LOGGING)
+
   logger = logging.getLogger('history')
 
   if request.method == 'POST':
