@@ -1,19 +1,17 @@
 {% load static %}
 <nav class="container-fluid">
-  {% comment %} <script>
-    const usernameSocket = new WebSocket('ws://' + window.location.host + '/ws/username/');
+  <script>
+    function fetchRandomName() {
+      fetch('/api/get_username')
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('random-name').innerText = data.username;
+        }
+      );
+    }
 
-    usernameSocket.onmessage = function(e) {
-      const data = JSON.parse(e.data);
-      console.log(data.message);
-      if (data.name){
-        document.querySelector('p').innerText = 'Hello ' + data.name + '!';
-      }
-    };
-
-    usernameSocket.onclose = function(e) {
-      console.error('Chat socket closed unexpectedly');
-    };
-  </script> {% endcomment %}
-  <p>Hello {{  username  }}!</p>
+    setInterval(fetchRandomName, 42000); // 42 seconds
+    window.onload = fetchRandomName; // Fetch name on page load
+  </script>
+  <p>Hello <span id="random-name">Annonymous</span>!</p>
 </nav>

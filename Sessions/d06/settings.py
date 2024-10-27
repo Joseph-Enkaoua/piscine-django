@@ -137,8 +137,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 RANDOM_NAMES = [
     'Victor',
     'Romain',
-    'Guillaume',
     'Alexandre',
+    'Guillaume',
     'Thomas',
     'Julien',
     'Maxime',
