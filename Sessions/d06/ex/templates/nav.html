@@ -1,0 +1,19 @@
+{% load static %}
+<nav class="container-fluid">
+  {% comment %} <script>
+    const usernameSocket = new WebSocket('ws://' + window.location.host + '/ws/username/');
+
+    usernameSocket.onmessage = function(e) {
+      const data = JSON.parse(e.data);
+      console.log(data.message);
+      if (data.name){
+        document.querySelector('p').innerText = 'Hello ' + data.name + '!';
+      }
+    };
+
+    usernameSocket.onclose = function(e) {
+      console.error('Chat socket closed unexpectedly');
+    };
+  </script> {% endcomment %}
+  <p>Hello {{  username  }}!</p>
+</nav>
