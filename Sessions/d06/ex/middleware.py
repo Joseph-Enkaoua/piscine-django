@@ -5,6 +5,8 @@ from django.utils.deprecation import MiddlewareMixin
 
 class RandomNameMiddleware(MiddlewareMixin):
   def process_request(self, request):
+    if request.session.get('is_authenticated', False):
+      return
     if not request.session.get('last_name_update'):
       request.session['last_name_update'] = time.time()
       request.session['username'] = random.choice(settings.RANDOM_NAMES)

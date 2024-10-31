@@ -1,7 +1,7 @@
 {% load static %}
 <nav class="container-fluid">
   <script>
-    function fetchRandomName() {
+    function fetchUsername() {
       fetch('/api/get_username')
         .then(response => response.json())
         .then(data => {
@@ -10,8 +10,16 @@
       );
     }
 
-    setInterval(fetchRandomName, 42000); // 42 seconds
-    window.onload = fetchRandomName; // Fetch name on page load
+    {% if not user.is_authenticated %}
+    setInterval(fetchUsername, 4200); // 42 seconds
+    <a href="{% url 'login' %}">Log In</a>
+    {% endif %}
+    window.onload = fetchUsername; // Fetch name on page load
   </script>
+
   <p>Hello <span id="random-name">Annonymous</span>!</p>
+
+  {% if not user.is_authenticated %}
+  <a href="{% url 'login' %}">Log In</a>
+  {% endif %}
 </nav>

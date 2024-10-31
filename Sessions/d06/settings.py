@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'd06.ex',
     'bootstrap5',
+    'bootstrap_modal_forms',
 ]
 
 MIDDLEWARE = [
@@ -148,3 +149,5 @@ RANDOM_NAMES = [
 ]
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+LOGIN_REDIRECT_URL = '/'
