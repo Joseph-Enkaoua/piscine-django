@@ -1,18 +1,16 @@
 {% load static %}
+{% load bootstrap5 %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <meta mame="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Life Pro Tips{% endblock %}</title>
-    {% load bootstrap5 %}
     {% bootstrap_css %}
-    {% bootstrap_javascript %}
   </head>
   <body>
-    <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/bootstrap5.modal.forms.js' %}"></script>
+    {% bootstrap_javascript %}
     {% include 'nav.html' %}
     <br>
     <div class="container">

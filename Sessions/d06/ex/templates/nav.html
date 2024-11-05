@@ -5,21 +5,26 @@
       fetch('/api/get_username')
         .then(response => response.json())
         .then(data => {
-          document.getElementById('random-name').innerText = data.username;
+          document.getElementById('username').innerText = data.username;
         }
       );
     }
 
     {% if not user.is_authenticated %}
-    setInterval(fetchUsername, 4200); // 42 seconds
-    <a href="{% url 'login' %}">Log In</a>
+    setInterval(fetchUsername, 42000); // 42 seconds
     {% endif %}
     window.onload = fetchUsername; // Fetch name on page load
   </script>
 
-  <p>Hello <span id="random-name">Annonymous</span>!</p>
+  <a href="/">Sessions</a>
+
+  <p>Hello <span id="username"></span>!</p>
 
   {% if not user.is_authenticated %}
-  <a href="{% url 'login' %}">Log In</a>
+  <p><a href="{% url 'Register' %}">Register</a></p>
+  <a href="{% url 'Login' %}">Log In</a>
+  {% else %}
+  <p><a href="{% url 'password_change' %}">Password Change</a></p>
+  <a href="{% url 'logout' %}" method="post">Log Out</a>
   {% endif %}
 </nav>

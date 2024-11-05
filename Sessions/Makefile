@@ -10,7 +10,7 @@ PYTHON_PATH = python3
 django-clean:
 	@echo "$(INFO)[INFO] Cleaning up Django app$(NC)"
 	@echo "----------------------------------------"
-	find  ex/migrations/ -type f ! -name '__init__.py' -exec rm -f {} +
+	# find  ex/migrations/ -type f ! -name '__init__.py' -exec rm -f {} +
 
 django-run:
 	@echo "$(INFO)[INFO] Running Django app$(NC)"
@@ -18,6 +18,7 @@ django-run:
 	@pip3 install -r requirements.txt
 	$(PYTHON_PATH) manage.py makemigrations
 	$(PYTHON_PATH) manage.py migrate
+	sleep 1
 	$(PYTHON_PATH) manage.py runserver
 
 docker-clean:

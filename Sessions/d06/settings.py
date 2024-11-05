@@ -150,4 +150,9 @@ RANDOM_NAMES = [
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
