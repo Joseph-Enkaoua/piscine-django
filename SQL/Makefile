@@ -3,19 +3,18 @@ SUCCESS = \033[0;32m
 INFO = \033[0;34m
 NC = \033[0m 
 
-DOCKER_COMPOSE = sudo docker-compose
-DOCKER = sudo docker
+DOCKER_COMPOSE = docker-compose
+DOCKER = docker
 PYTHON_PATH = python3
 
 django-clean:
 	@echo "$(INFO)[INFO] Cleaning up Django app$(NC)"
 	@echo "----------------------------------------"
-	find ex00/migrations/ ex01/migrations/ ex02/migrations/ ex03/migrations/ ex04/migrations/ ex05/migrations/ ex06/migrations/ ex07/migrations/ ex08/migrations/ ex09/migrations/ ex10/migrations/ -type f ! -name '__init__.py' -exec rm -f {} +
+	find ex00/migrations/ ex01/migrations/ ex03/migrations/ ex04/migrations/ ex05/migrations/ ex06/migrations/ ex07/migrations/ ex08/migrations/ ex09/migrations/ ex10/migrations/ -type f ! -name '__init__.py' -exec rm -f {} +
 
 django-run:
 	@echo "$(INFO)[INFO] Running Django app$(NC)"
 	@echo "----------------------------------------"
-	$(PYTHON_PATH) -m venv venv
 	@pip3 install -r requirements.txt
 	$(PYTHON_PATH) manage.py makemigrations
 	$(PYTHON_PATH) manage.py migrate
