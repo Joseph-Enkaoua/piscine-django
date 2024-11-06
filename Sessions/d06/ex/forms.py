@@ -1,3 +1,20 @@
+from django import forms
+from .models import Tips
+
+class TipForm(forms.ModelForm):
+    class Meta:
+        model = Tips
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(attrs={
+                'rows': 3,
+                'style': 'width: 100%;',
+                'placeholder': 'Share your tip here...',
+            }),
+        }
+
+
+
 # from django import forms
 # from .models import *
 
@@ -28,14 +45,3 @@
 #     if commit:
 #       user.save()
 #     return user
-
-
-# class LoginForm(forms.Form):
-#   username = forms.CharField(
-#     label="", 
-#     widget=forms.TextInput(attrs={'id': 'entry-field'})
-#   )
-#   password = forms.CharField(
-#     label="", 
-#     widget=forms.PasswordInput(attrs={'id': 'entry-field'})
-#   )

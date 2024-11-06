@@ -26,5 +26,5 @@ class RedirectIfAuthenticatedMixin(AccessMixin):
   def dispatch(self, request, *args, **kwargs):
     if request.user.is_authenticated:
       print("User is authenticated in login!")
-      return redirect("Home")
+      return redirect("home")
     return super().dispatch(request, *args, **kwargs)
