@@ -4,42 +4,69 @@
 {% block title %}Home - Life Pro Tips{% endblock %}
 
 {% block content %}
-  <h1 class="text-center mb-4">Life Pro Tips</h1>
-  <p class="text-center mb-4">Welcome to Life Pro Tips! This is a collection of tips and tricks to help you get the most out of life.</p>
+  <div class="d-flex flex-column" style="max-height: calc(100vh - 106px); padding-bottom: 20px;">
+    <div class="text-center mb-4">
+      <h1 class="text-center mb-4">Life Pro Tips</h1>
+      <p>Welcome to Life Pro Tips! This is a collection of tips and tricks to help you get the most out of life.</p>
+    </div>
 
-  <div class="container mb-4">
-    <div class="border p-3" style="max-height: 400px; overflow-y: auto;">  <!-- Scrollable box for tips -->
-      <div class="row">
-        {% for tip in tips %}
-          <div class="col-md-6 mb-4">
-            <div class="card h-100 shadow-sm">
-              <div class="card-body">
-                <p class="card-text" style="max-height: 200px; overflow-y: auto;">{{ tip.content }}</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">
-                  Posted by {{ tip.author.username }} on {{ tip.date|date:"d M Y" }}
-                </small>
+    <div class="container flex-grow-1 mb-4 d-flex" style="overflow-y: auto;">
+      <div class="border p-3 w-100" style="max-height: 65vh; background-color: azure;">
+        <div class="row">
+          {% for tip in tips %}
+            <div class="col-md-6 mb-4">
+              <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                  <p class="card-text" style="max-height: 200px; overflow-y: auto;">{{ tip.content }}</p>
+                </div>
+                <div class="card-footer d-flex justify-content-between align-items-center">
+                  <small class="text-muted">
+                    Posted by {{ tip.author.username }} on {{ tip.date|date:"d M Y" }}
+                  </small>
+                  <div class="d-flex align-items-center">
+                    {% if user.is_authenticated %}
+                      <form method="post" action="{% url 'upvote_tip' tip.id %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-outline-success">
+                          👍 {{ tip.upvotes.count }}
+                        </button>
+                      </form>
+                      <form method="post" action="{% url 'downvote_tip' tip.id %}" style="display: inline; margin-left: 5px;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                          👎 {{ tip.downvotes.count }}
+                        </button>
+                      </form>
+                      {% if tip.author == user %}
+                        <form method="post" action="{% url 'delete_tip' tip.id %}" style="display: inline; margin-left: 5px;">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                        </form>
+                      {% endif %}
+                    {% endif %}
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        {% empty %}
-          <p class="text-center">No tips available yet. Check back soon!</p>
-        {% endfor %}
+          {% empty %}
+            <p class="text-center">No tips available yet. Check back soon!</p>
+          {% endfor %}
+        </div>
       </div>
     </div>
-  </div>
 
-  {% if user.is_authenticated %}
-    <div class="container">
-      <h3 class="text-center mb-3">Add a New Tip</h3>
-      <form method="post" action="{% url 'home' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Submit Tip</button>
-      </form>
+    <div class="container mb-4">
+      {% if user.is_authenticated %}
+        <h3 class="text-center mb-3">Add a New Tip</h3>
+        <form method="post" action="{% url 'home' %}">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-primary">Submit Tip</button>
+        </form>
+      {% else %}
+        <p class="text-center">Log in to add a new tip.</p>
+      {% endif %}
     </div>
-  {% else %}
-    <p class="text-center">Log in to add a new tip.</p>
-  {% endif %}
+
+  </div>
 {% endblock %}

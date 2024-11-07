@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
@@ -8,6 +8,7 @@ from .middleware import RedirectIfAuthenticatedMixin
 from django.contrib.auth.views import LoginView
 from .models import Tips
 from .forms import TipForm
+from django.contrib.auth.decorators import login_required
 
 def index(request):
   tips = Tips.objects.all().order_by('-date')
@@ -54,3 +55,32 @@ class Register(RedirectIfAuthenticatedMixin, CreateView):
 class CustomLoginView(RedirectIfAuthenticatedMixin, LoginView):
   template_name = "registration/login.html"
 
+
+@login_required
+def delete_tip(request, tip_id):
+  Tips.objects.filter(id=tip_id).delete()
+  return redirect('home')
+
+
+@login_required
+def upvote_tip(request, tip_id):
+  tip = get_object_or_404(Tips, id=tip_id)
+  if request.user in tip.upvotes.all():
+    tip.upvotes.remove(request.user)
+  else:
+    tip.upvotes.add(request.user)
+    tip.downvotes.remove(request.user)
+  tip.save()
+  return redirect('home')
+
+
+@login_required
+def downvote_tip(request, tip_id):
+  tip = get_object_or_404(Tips, id=tip_id)
+  if request.user in tip.downvotes.all():
+    tip.downvotes.remove(request.user)
+  else:
+    tip.downvotes.add(request.user)
+    tip.upvotes.remove(request.user)
+  tip.save()
+  return redirect('home')
