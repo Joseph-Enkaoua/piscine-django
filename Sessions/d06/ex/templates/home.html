@@ -37,7 +37,7 @@
                           👎 {{ tip.downvotes.count }}
                         </button>
                       </form>
-                      {% if tip.author == user %}
+                      {% if user == tip.author or can_delete_tips %}
                         <form method="post" action="{% url 'delete_tip' tip.id %}" style="display: inline; margin-left: 5px;">
                           {% csrf_token %}
                           <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>

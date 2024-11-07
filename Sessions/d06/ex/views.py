@@ -9,6 +9,7 @@ from django.contrib.auth.views import LoginView
 from .models import Tips
 from .forms import TipForm
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 
 def index(request):
   tips = Tips.objects.all().order_by('-date')
@@ -23,7 +24,8 @@ def index(request):
       tip.save()
       return redirect('home')
 
-  return render(request, 'home.html', {'tips': tips, 'form': form})
+  can_delete_tips = request.user.has_perm("ex.delete_tips")
+  return render(request, 'home.html', {'tips': tips, 'form': form, 'can_delete_tips': can_delete_tips})
 
 
 def get_username(request):
@@ -58,8 +60,13 @@ class CustomLoginView(RedirectIfAuthenticatedMixin, LoginView):
 
 @login_required
 def delete_tip(request, tip_id):
-  Tips.objects.filter(id=tip_id).delete()
-  return redirect('home')
+  tip = get_object_or_404(Tips, id=tip_id)
+  
+  if request.user == tip.author or request.user.has_perm('ex.delete_tips'):
+    tip.delete()
+    return redirect('home')
+  else:
+    raise PermissionDenied
 
 
 @login_required
