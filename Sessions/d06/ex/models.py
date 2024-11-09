@@ -4,6 +4,9 @@ from django.db import models
 class Tips(models.Model):
   class Meta:
     db_table = 'tips'
+    permissions = [
+      ("downvote", "Can downvote tips"),
+    ]
 
   content = models.TextField(max_length=2000)
   author = models.ForeignKey(User, on_delete=models.CASCADE)

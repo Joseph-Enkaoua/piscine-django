@@ -31,12 +31,14 @@
                           👍 {{ tip.upvotes.count }}
                         </button>
                       </form>
-                      <form method="post" action="{% url 'downvote_tip' tip.id %}" style="display: inline; margin-left: 5px;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-sm btn-outline-danger">
-                          👎 {{ tip.downvotes.count }}
-                        </button>
-                      </form>
+                      {% if user == tip.author or can_downvote %}
+                        <form method="post" action="{% url 'downvote_tip' tip.id %}" style="display: inline; margin-left: 5px;">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-sm btn-outline-danger">
+                            👎 {{ tip.downvotes.count }}
+                          </button>
+                        </form>
+                      {% endif %}
                       {% if user == tip.author or can_delete_tips %}
                         <form method="post" action="{% url 'delete_tip' tip.id %}" style="display: inline; margin-left: 5px;">
                           {% csrf_token %}

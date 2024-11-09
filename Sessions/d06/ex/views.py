@@ -25,7 +25,8 @@ def index(request):
       return redirect('home')
 
   can_delete_tips = request.user.has_perm("ex.delete_tips")
-  return render(request, 'home.html', {'tips': tips, 'form': form, 'can_delete_tips': can_delete_tips})
+  can_downvote = request.user.has_perm('downvote')
+  return render(request, 'home.html', {'tips': tips, 'form': form, 'can_delete_tips': can_delete_tips, 'can_downvote': can_downvote})
 
 
 def get_username(request):
