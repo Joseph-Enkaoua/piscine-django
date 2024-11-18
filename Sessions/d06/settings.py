@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'ex.CustomUser'
 
 # Application definition
 
@@ -154,5 +155,6 @@ LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
 AUTHENTICATION_BACKENDS = [
+    'd06.ex.permissions.ReputationPermissionBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]

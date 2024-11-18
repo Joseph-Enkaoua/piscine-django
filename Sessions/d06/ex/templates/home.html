@@ -21,7 +21,7 @@
                 </div>
                 <div class="card-footer d-flex justify-content-between align-items-center">
                   <small class="text-muted">
-                    Posted by {{ tip.author.username }} on {{ tip.date|date:"d M Y" }}
+                    Posted by {{ tip.author.username }} ({{ tip.author.reputation }}) on {{ tip.date|date:"d M Y" }}
                   </small>
                   <div class="d-flex align-items-center">
                     {% if user.is_authenticated %}

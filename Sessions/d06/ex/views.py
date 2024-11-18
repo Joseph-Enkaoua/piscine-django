@@ -1,13 +1,12 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.contrib.auth import login, authenticate
 from .middleware import RedirectIfAuthenticatedMixin
 from django.contrib.auth.views import LoginView
 from .models import Tips
-from .forms import TipForm
+from .forms import TipForm, CustomUserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 
@@ -25,7 +24,7 @@ def index(request):
       return redirect('home')
 
   can_delete_tips = request.user.has_perm("ex.delete_tips")
-  can_downvote = request.user.has_perm('downvote')
+  can_downvote = request.user.has_perm("downvote")
   return render(request, 'home.html', {'tips': tips, 'form': form, 'can_delete_tips': can_delete_tips, 'can_downvote': can_downvote})
 
 
@@ -35,7 +34,7 @@ def get_username(request):
 
 
 class Register(RedirectIfAuthenticatedMixin, CreateView):
-  form_class = UserCreationForm
+  form_class = CustomUserCreationForm
   success_url = reverse_lazy("home")
   template_name = "registration/register.html"
 
@@ -62,7 +61,7 @@ class CustomLoginView(RedirectIfAuthenticatedMixin, LoginView):
 @login_required
 def delete_tip(request, tip_id):
   tip = get_object_or_404(Tips, id=tip_id)
-  
+
   if request.user == tip.author or request.user.has_perm('ex.delete_tips'):
     tip.delete()
     return redirect('home')
@@ -79,6 +78,7 @@ def upvote_tip(request, tip_id):
     tip.upvotes.add(request.user)
     tip.downvotes.remove(request.user)
   tip.save()
+  tip.author.update_reputation()
   return redirect('home')
 
 
@@ -91,4 +91,5 @@ def downvote_tip(request, tip_id):
     tip.downvotes.add(request.user)
     tip.upvotes.remove(request.user)
   tip.save()
+  tip.author.update_reputation()
   return redirect('home')
