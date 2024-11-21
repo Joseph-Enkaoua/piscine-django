@@ -406,3 +406,5 @@ FodyWeavers.xsd
 SQL/ex01/migrations/0001_initial.py
 SQL/ex03/migrations/0001_initial.py
 SQL/ex07/migrations/0001_initial.py
+Advanced/db.sqlite3
+Advanced/app/migrations/0001_initial.py

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Articles{% endblock %}
+
+{% block content %}
+<div class="table-responsive">
+    {% if articles %}
+        <table class="table articles-custom">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Synopsis</th>
+                    <th>Author</th>
+                    <th>Created</th>
+                    <th>When</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for article in articles %}
+                    <tr>
+                        <td>{{ article.title }}</td>
+                        <td>{{ article.synopsis|truncatechars:20 }}</td>
+                        <td>{{ article.author }}</td>
+                        <td>{{ article.created }}</td>
+                        <td>{{ article.created|timesince }}</td>
+                        <!-- <td>
+                            <a href="{% url 'app:details' article.pk %}?referrer=articles" class="btn btn-info">Read</a>
+                        </td> -->
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            No articles posted yet!
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
