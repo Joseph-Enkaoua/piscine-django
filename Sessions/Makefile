@@ -24,10 +24,7 @@ django-run:
 docker-clean:
 	@echo "$(INFO)[INFO] Cleaning up Docker containers$(NC)"
 	@echo "----------------------------------------"
-	$(DOCKER_COMPOSE) down --rmi all -v --remove-orphans
-	@if [ "$$( $(DOCKER) ps -aq )" ]; then \
-		$(DOCKER) rm $$( $(DOCKER) ps -aq ) || true; \
-	fi
+	$(DOCKER_COMPOSE) down -v --remove-orphans
 	@echo "$(SUCCESS)[SUCCESS] Docker containers cleaned$(NC)"
 
 docker-run:
@@ -57,7 +54,7 @@ clean: django-clean
 
 fclean: clean docker-clean
 
-re : fclean run
+re: fclean run
 
 help:
 	@echo "$(INFO)	Available commands:$(NC)"
