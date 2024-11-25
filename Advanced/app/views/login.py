@@ -1,9 +1,8 @@
 from app.forms import LoginForm
 from django.views.generic.edit import FormView
 from django.contrib.auth import authenticate, login
-from django.contrib import messages
 from django.urls import reverse_lazy
-from django.shortcuts import render
+from django.http import HttpResponseRedirect
 
 
 class LoginFormView(FormView):
@@ -17,5 +16,6 @@ class LoginFormView(FormView):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(self.request, user)
-            return super().form_valid(form)
+            next_url = self.request.GET.get("next", self.success_url)
+            return HttpResponseRedirect(next_url)
         return self.form_invalid(form)

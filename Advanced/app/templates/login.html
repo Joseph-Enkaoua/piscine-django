@@ -9,7 +9,7 @@
 <div class="row justify-content-center mt-4 mx-2">
   <div class="col-md-6 col-lg-4">
     <h2 class="text-center mb-4" role="heading">Log In</h2>
-    <form method="post" action="{% url 'app:login' %}" class="bg-light p-5 rounded shadow-lg" role="form">
+    <form method="post" action="{% url 'app:login' %}?{% if request.GET.next %}next={{ request.GET.next }}{% endif %}" class="bg-light p-5 rounded shadow-lg" role="form">
       {% csrf_token %}
       {% bootstrap_form form layout='vertical' show_labels=True show_help=True %}
       <div class="d-flex justify-content-between mt-4">
