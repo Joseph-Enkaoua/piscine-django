@@ -3,6 +3,7 @@ from django.views.generic.edit import FormView
 from django.contrib.auth import authenticate, login
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
+from django.shortcuts import resolve_url
 
 
 class LoginFormView(FormView):
@@ -19,3 +20,9 @@ class LoginFormView(FormView):
             next_url = self.request.GET.get("next", self.success_url)
             return HttpResponseRedirect(next_url)
         return self.form_invalid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Provide fallback URL for Cancel button
+        context["cancel_url"] = resolve_url("app:home")
+        return context

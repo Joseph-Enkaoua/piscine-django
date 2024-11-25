@@ -2,28 +2,29 @@
 {% load django_bootstrap5 %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Very cool Articles website{% endblock %}</title>
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-  </head>
-  <body>
-    <br>
-    <div class="container">
-      {% if messages %}
-        <div class="alert alert-info">
-            {% for message in messages %}
-              <p>{{ message }}</p>
-            {% endfor %}
-        </div>
-      {% endif %}
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>{% block title %}Very cool Articles website{% endblock %}</title>
+		{% bootstrap_css %}
+		{% bootstrap_javascript %}
+	</head>
+	{% include "nav.html" %}
+	<body>
+		<br>
+		<div class="container">
+			{% if messages %}
+				<div class="alert alert-info">
+						{% for message in messages %}
+							<p>{{ message }}</p>
+						{% endfor %}
+				</div>
+			{% endif %}
 
-      {% comment %} {% autoescape off %}{% bootstrap_messages %}{% endautoescape %} {% endcomment %}
+			{% comment %} {% autoescape off %}{% bootstrap_messages %}{% endautoescape %} {% endcomment %}
 
-    {% block content %}
-    {% endblock %}
-    </div>
-  </body>
+		{% block content %}
+		{% endblock %}
+		</div>
+	</body>
 </html>
