@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}My Favorites{% endblock %}
+
+{% block content %}
+<h2>My Favorite Articles</h2>
+{% if favorite_articles %}
+    <ul class="list-group">
+        {% for favorite in favorite_articles %}
+            <li class="list-group-item">
+                <a href="{% url 'app:article_detail' favorite.article.pk %}" class="text-decoration-none">
+                    {{ favorite.article.title }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p class="alert alert-info">You have no favorite articles yet.</p>
+{% endif %}
+{% endblock %}

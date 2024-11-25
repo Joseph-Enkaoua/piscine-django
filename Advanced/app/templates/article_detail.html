@@ -11,6 +11,6 @@
     <p><strong>Full Content:</strong></p>
     <div>{{ article.content|safe }}</div>
 
-    <a href="{% url 'app:articles' %}" class="btn btn-secondary mt-4">Back to Articles</a>
+    <a href="{{ request.META.HTTP_REFERER|default:cancel_url }}" class="btn btn-secondary mt-4">Back to Articles</a>
 </div>
 {% endblock %}

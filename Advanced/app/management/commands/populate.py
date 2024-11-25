@@ -61,10 +61,23 @@ class Command(BaseCommand):
             articles.append(article)
         return articles
 
+    def bind_favorites(self, users, articles):
+        favourites_data = [
+            {'user': users[0], 'article': articles[0]},
+            {'user': users[0], 'article': articles[1]},
+            {'user': users[1], 'article': articles[2]},
+            {'user': users[1], 'article': articles[3]},
+            {'user': users[2], 'article': articles[4]},
+        ]
+        for favourite_data in favourites_data:
+            if not UserFavouriteArticle.exists(favourite_data['user'], favourite_data['article']):
+                UserFavouriteArticle.create(favourite_data['user'], favourite_data['article'])
+
     def handle(self, *args, **options):
         try:
             users = self.create_users()
             articles = self.create_articles(users)
+            self.bind_favorites(users, articles)
             self.stdout.write(self.style.SUCCESS("Data population complete."))
         except Exception as e:
             self.stdout.write(self.style.ERROR("An error occurred: %s") % e)

@@ -4,9 +4,9 @@ from .login import *
 from .publications import *
 from .detail import *
 from .logout import *
+from .favorites import *
 
 # from .register import *
-# from .favourites import *
 # from .publish import *
 
 # from .translate import *
