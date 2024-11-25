@@ -14,7 +14,7 @@
                     <th>Author</th>
                     <th>Created</th>
                     <th>When</th>
-                    {% comment %} <th></th> {% endcomment %}
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -25,9 +25,9 @@
                         <td>{{ article.author }}</td>
                         <td>{{ article.created }}</td>
                         <td>{{ article.created|timesince }}</td>
-                        {% comment %} <td>
-                            <a href="{% url 'app:details' article.pk %}?referrer=articles" class="btn btn-info">Read</a>
-                        </td> {% endcomment %}
+                        <td>
+                            <a href="{% url 'app:article_detail' article.pk %}" class="btn btn-info">Read</a>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>

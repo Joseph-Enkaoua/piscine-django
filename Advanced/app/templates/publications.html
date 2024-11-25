@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Articles{% endblock %}
+
+{% block content %}
+<div class="table-responsive">
+    {% if user.is_authenticated %}
+        {% if article_list %}
+            <table class="table articles-custom">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Synopsis</th>
+                        <th>Created</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for article in article_list %}
+                        <tr>
+                            <td>{{ article.title }}</td>
+                            <td>{{ article.synopsis|truncatechars:20 }}</td>
+                            <td>{{ article.created }}</td>
+                            <td>
+                                <a href="{% url 'app:article_detail' article.pk %}" class="btn btn-info">Read</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="alert alert-info" role="alert">
+                No articles published yet!
+            </div>
+        {% endif %}
+    {% else %}
+        <p>You need to be logged in to view your articles. <a href="{% url 'login' %}">Log in here</a>.</p>
+    {% endif %}
+</div>
+{% endblock %}

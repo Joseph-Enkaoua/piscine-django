@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ article.title }} - Details{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>{{ article.title }}</h1>
+    <p><strong>Author:</strong> {{ article.user.username }}</p>
+    <p><strong>Created:</strong> {{ article.created }}</p>
+    <p><strong>Synopsis:</strong> {{ article.synopsis }}</p>
+    <p><strong>Full Content:</strong></p>
+    <div>{{ article.content|safe }}</div>
+
+    <a href="{% url 'app:articles' %}" class="btn btn-secondary mt-4">Back to Articles</a>
+</div>
+{% endblock %}
