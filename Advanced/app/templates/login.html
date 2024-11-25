@@ -6,15 +6,15 @@
 {% block title %}Blog Site - Login{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
+<div class="row justify-content-center mt-4 mx-2">
   <div class="col-md-6 col-lg-4">
-    <h2 class="text-center mb-4">Log In</h2>
-    <form method="post" class="bg-light p-4 rounded shadow-sm">
+    <h2 class="text-center mb-4" role="heading">Log In</h2>
+    <form method="post" action="{% url 'app:login' %}" class="bg-light p-5 rounded shadow-lg" role="form">
       {% csrf_token %}
-      {% bootstrap_form form layout='vertical' %}
-      <div class="d-flex justify-content-between mt-3">
-        <a href="{% url 'app:home' %}" class="btn btn-secondary w-100 me-2">Cancel</a>
-        <button type="submit" class="btn btn-primary w-100 ms-2">Log In</button>
+      {% bootstrap_form form layout='vertical' show_labels=True show_help=True %}
+      <div class="d-flex justify-content-between mt-4">
+        {% bootstrap_button button_type="reset" content="Cancel" button_class="btn btn-secondary w-100 me-2" %}
+        {% bootstrap_button button_type="submit" content="Log In" button_class="btn btn-primary w-100 ms-2" %}
       </div>
     </form>
   </div>
