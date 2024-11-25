@@ -1,5 +1,5 @@
 {% load static %}
-{% load bootstrap5 %}
+{% load django_bootstrap5 %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Very cool Articles website{% endblock %}</title>
     {% bootstrap_css %}
+    {% bootstrap_javascript %}
   </head>
   <body>
-    {% bootstrap_javascript %}
     <br>
     <div class="container">
       {% if messages %}
