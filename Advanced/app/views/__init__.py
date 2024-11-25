@@ -1,8 +1,8 @@
 from .articles import *
 from .home import *
+from .login import *
 
 # from .register import *
-# from .login import *
 # from .logout import *
 # from .publications import *
 # from .details import *

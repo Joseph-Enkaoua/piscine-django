@@ -9,7 +9,6 @@
     {% bootstrap_css %}
   </head>
   <body>
-    <script src="{% static 'js/bootstrap5.modal.forms.js' %}"></script>
     {% bootstrap_javascript %}
     <br>
     <div class="container">
@@ -20,6 +19,8 @@
             {% endfor %}
         </div>
       {% endif %}
+
+      {% comment %} {% autoescape off %}{% bootstrap_messages %}{% endautoescape %} {% endcomment %}
 
     {% block content %}
     {% endblock %}

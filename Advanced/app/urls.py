@@ -7,9 +7,9 @@ urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('home/', HomeView.as_view(), name='home'),
     path('articles/', ArticlesListView.as_view(), name='articles'),
+    path('login/', LoginFormView.as_view(), name='login'),
 
     # path('register/', ViewRegister.as_view(), name='register'),
-    # path('login/', ViewLogin.as_view(), name='login'),
     # path('login/nav/', ViewLoginNav.as_view(), name='login_nav'),
     # path('logout/', ViewLogout.as_view(), name='logout'),
 
