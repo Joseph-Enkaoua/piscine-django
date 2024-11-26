@@ -62,16 +62,16 @@ class Command(BaseCommand):
         return articles
 
     def bind_favorites(self, users, articles):
-        favourites_data = [
+        favorites_data = [
             {'user': users[0], 'article': articles[0]},
             {'user': users[0], 'article': articles[1]},
             {'user': users[1], 'article': articles[2]},
             {'user': users[1], 'article': articles[3]},
             {'user': users[2], 'article': articles[4]},
         ]
-        for favourite_data in favourites_data:
-            if not UserFavouriteArticle.exists(favourite_data['user'], favourite_data['article']):
-                UserFavouriteArticle.create(favourite_data['user'], favourite_data['article'])
+        for favourite_data in favorites_data:
+            if not UserFavoriteArticle.exists(favourite_data['user'], favourite_data['article']):
+                UserFavoriteArticle.create(favourite_data['user'], favourite_data['article'])
 
     def handle(self, *args, **options):
         try:

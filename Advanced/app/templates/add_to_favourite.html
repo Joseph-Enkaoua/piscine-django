@@ -1,6 +1,12 @@
-<form method="post" class="bg-light p-5 rounded shadow-lg">
-	{% csrf_token %}
-	<p>Are you sure you want to add this article to your favourites?</p>
-	<button type="submit" class="btn btn-primary">Confirm</button>
-	<a href="{% url 'app:detail' pk=object.article.pk %}" class="btn btn-secondary">Cancel</a>
-</form>
+{% load django_bootstrap5 %}
+
+{% if user.is_authenticated and not is_favorited %}
+    <form method="post" class="bg-light p-5 rounded" action="{% url 'app:add_to_favorite' article.pk %}">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.META.HTTP_REFERER|default:request.path }}">
+        {% bootstrap_form form %}
+        <button type="submit" class="btn btn-warning">Add to favorites</button>
+    </form>
+{% elif user.is_authenticated %}
+    <p class="alert alert-info mt-3">This article is in your favorites.</p>
+{% endif %}

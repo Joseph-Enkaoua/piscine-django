@@ -3,12 +3,15 @@ from .user import *
 from .article import *
 
 
-class UserFavouriteArticle(models.Model):
+class UserFavoriteArticle(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="owner")
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
 
+    class Meta:
+        unique_together = ('user', 'article')
+
     def __str__(self):
-        return self.article.title
+        return f"{self.user.username} - {self.article.title}"
     
     @classmethod
     def exists(cls, user, article):

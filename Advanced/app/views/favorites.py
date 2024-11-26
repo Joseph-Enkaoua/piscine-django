@@ -1,27 +1,37 @@
-from django.urls import reverse_lazy
+from django.db import IntegrityError
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from app.models import UserFavouriteArticle
+from app.models import UserFavoriteArticle, Article
 from django.views.generic.edit import CreateView
+from app.forms import AddToFavForm
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages
 
 
-class FavouritesListView(LoginRequiredMixin, ListView):
-    template_name = "favourites.html"
+class FavoritesListView(LoginRequiredMixin, ListView):
+    template_name = "favorites.html"
     context_object_name = "favorite_articles"
 
     def get_queryset(self):
-        # Filter UserFavouriteArticle for the logged-in user and return related articles
-        return UserFavouriteArticle.objects.filter(user=self.request.user).select_related('article')
+        # Filter UserFavoriteArticle for the logged-in user and return related articles
+        return UserFavoriteArticle.objects.filter(user=self.request.user).select_related('article')
 
 
-class AddToFavouriteView(LoginRequiredMixin, CreateView):
-    model = UserFavouriteArticle
-    fields = []
-    template_name = "add_to_favourite.html"
-    success_url = reverse_lazy("app:favourites")
+class AddToFavoriteView(LoginRequiredMixin, CreateView):
+    model = UserFavoriteArticle
+    form_class = AddToFavForm
+    template_name = "add_to_favorite.html"
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        article = get_object_or_404(Article, pk=self.kwargs['pk'])
+        kwargs['user'] = self.request.user
+        kwargs['article'] = article
+        return kwargs
 
     def form_valid(self, form):
-        article_id = self.kwargs["pk"]
-        form.instance.article_id = article_id
-        form.instance.user = self.request.user
-        return super().form_valid(form)
+        try:
+            form.save()
+        except IntegrityError:
+            messages.error(self.request, "Error: Article is already in your favorites.")
+        return redirect("app:article_detail", pk=self.kwargs['pk'])

@@ -12,8 +12,8 @@ urlpatterns = [
     path("publications/", PublicationsListView.as_view(), name="publications"),
     path("detail/<int:pk>/", ArticleDetailView.as_view(), name="article_detail"),
     path("logout/", LogoutView.as_view(), name="logout"),
-    path("favorites/", FavouritesListView.as_view(), name='favorites'),
-    path("register/", RegisterView.as_view(), name='register'),
-    path("publish/", PublishArticleView.as_view(), name='publish'),
-    path("articles/<int:pk>/add/", AddToFavouriteView.as_view(), name="add_to_favourite"),
+    path("favorites/", FavoritesListView.as_view(), name="favorites"),
+    path("register/", RegisterView.as_view(), name="register"),
+    path("publish/", PublishArticleView.as_view(), name="publish"),
+    path("add-to-favorite/<int:pk>/", AddToFavoriteView.as_view(), name="add_to_favorite"),
 ]
