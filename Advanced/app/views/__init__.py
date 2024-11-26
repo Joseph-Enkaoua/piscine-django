@@ -6,7 +6,7 @@ from .detail import *
 from .logout import *
 from .favorites import *
 from .register import *
+from .publish import *
 
-# from .publish import *
 
 # from .translate import *
