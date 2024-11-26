@@ -1,0 +1,6 @@
+<form method="post" class="bg-light p-5 rounded shadow-lg">
+	{% csrf_token %}
+	<p>Are you sure you want to add this article to your favourites?</p>
+	<button type="submit" class="btn btn-primary">Confirm</button>
+	<a href="{% url 'app:detail' pk=object.article.pk %}" class="btn btn-secondary">Cancel</a>
+</form>

@@ -14,7 +14,5 @@ urlpatterns = [
     path("favorites/", FavouritesListView.as_view(), name='favorites'),
     path("register/", RegisterView.as_view(), name='register'),
     path("publish/", PublishArticleView.as_view(), name='publish'),
-    # path('login/nav/', ViewLoginNav.as_view(), name='login_nav'),
-    # path('favourites/<int:pk>/add/', AddToFavouritesView.as_view(), name='favourites_add'),
-    # path('translate/', ViewTranslate.as_view(), name='translate'),
+    path("articles/<int:pk>/add/", AddToFavouriteView.as_view(), name="add_to_favourite"),
 ]
