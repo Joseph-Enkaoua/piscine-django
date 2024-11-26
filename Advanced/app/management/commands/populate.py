@@ -24,31 +24,31 @@ class Command(BaseCommand):
             {
                 "title": "Article1",
                 "author": users[0],
-                "synopsis": "Synposis article 1",
+                "synopsis": "Synopsis of article 1 - other 20 characters to demonstrate what ex03 demands.",
                 "content": "Content article 1",
             },
             {
                 "title": "Article2",
                 "author": users[1],
-                "synopsis": "Synposis article 2",
+                "synopsis": "synopsis article 2",
                 "content": "Content article 2",
             },
             {
                 "title": "Article3",
                 "author": users[2],
-                "synopsis": "Synposis article 3",
+                "synopsis": "synopsis article 3",
                 "content": "Content article 3",
             },
             {
                 "title": "Article4",
                 "author": users[0],
-                "synopsis": "Synposis article 4",
+                "synopsis": "synopsis article 4",
                 "content": "Content article 4",
             },
             {
                 "title": "Article5",
                 "author": users[1],
-                "synopsis": "Synposis article 5",
+                "synopsis": "synopsis article 5",
                 "content": "Content article 5",
             },
         ]

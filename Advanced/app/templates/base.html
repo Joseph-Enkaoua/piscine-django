@@ -13,16 +13,7 @@
 	<body>
 		<br>
 		<div class="container">
-			{% if messages %}
-				<div class="alert alert-info">
-						{% for message in messages %}
-							<p>{{ message }}</p>
-						{% endfor %}
-				</div>
-			{% endif %}
-
-			{% comment %} {% autoescape off %}{% bootstrap_messages %}{% endautoescape %} {% endcomment %}
-
+		{% bootstrap_messages %}
 		{% block content %}
 		{% endblock %}
 		</div>
