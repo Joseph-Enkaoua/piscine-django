@@ -4,10 +4,10 @@
 {% block title %}My Articles{% endblock %}
 
 {% block content %}
-<div class="d-flex flex-column" style="height: 80vh;">
+<div class="d-flex flex-column" style="height: 70vh;">
     <div class="table-responsive flex-grow-1 overflow-auto">
         {% if user.is_authenticated %}
-        <h2 class="text-center my-3 p-2 bg-primary text-white rounded shadow-sm">My Articles</h2>
+        <h2 class="text-center my-3 p-2 my-5 border rounded shadow-sm">My Articles</h2>
             {% if article_list %}
                 <table class="table articles-custom mb-0">
                     <thead>
