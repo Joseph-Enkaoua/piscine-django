@@ -5,9 +5,10 @@ from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, resolve_url
 from django.contrib import messages
+from app.middleware import RedirectIfAuthenticatedMixin
 
 
-class LoginFormView(FormView):
+class LoginFormView(RedirectIfAuthenticatedMixin, FormView):
 	template_name = "login.html"
 	form_class = LoginForm
 	success_url = reverse_lazy("app:articles")

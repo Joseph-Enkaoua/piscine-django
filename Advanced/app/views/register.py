@@ -1,8 +1,9 @@
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
+from app.middleware import RedirectIfAuthenticatedMixin
 from app.forms import RegisterForm
 
-class RegisterView(CreateView):
+class RegisterView(RedirectIfAuthenticatedMixin, CreateView):
     template_name = "register.html"
     form_class = RegisterForm
     success_url = reverse_lazy("app:login")
