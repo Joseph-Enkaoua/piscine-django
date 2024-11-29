@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Articles{% endblock %}
+{% block title %}{% trans "Articles" %}{% endblock %}
 
 {% block content %}
 <div class="table-responsive">
@@ -9,11 +10,11 @@
         <table class="table articles-custom">
             <thead>
                 <tr>
-                    <th>Title</th>
-                    <th>Synopsis</th>
-                    <th>Author</th>
-                    <th>Created</th>
-                    <th>When</th>
+                    <th>{% trans "Title" %}</th>
+                    <th>{% trans "Synopsis" %}</th>
+                    <th>{% trans "Author" %}</th>
+                    <th>{% trans "Created" %}</th>
+                    <th>{% trans "When" %}</th>
                     <th></th>
                 </tr>
             </thead>
@@ -26,7 +27,7 @@
                         <td>{{ article.created|date:"Y-m-d H:i" }}</td>
                         <td>{{ article.created|timesince }}</td>
                         <td class="text-end">
-                            <a href="{% url 'app:article_detail' article.pk %}" class="btn btn-info">Read</a>
+                            <a href="{% url 'app:article_detail' article.pk %}" class="btn btn-info">{% trans "Read" %}</a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -34,7 +35,7 @@
         </table>
     {% else %}
         <div class="alert alert-info" role="alert">
-            No articles posted yet!
+            {% trans "No articles posted yet!" %}
         </div>
     {% endif %}
 </div>

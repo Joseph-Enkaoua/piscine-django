@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import (
     AbstractBaseUser,
     PermissionsMixin,
@@ -11,7 +12,7 @@ from django.contrib.auth.models import (
 class CustomUserManager(BaseUserManager):
     def create_user(self, username, password=None, **extra_fields):
         if not username:
-            raise ValueError("The Username field must be set")
+            raise ValueError(_("The Username field must be set"))
         user = self.model(username=username, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
@@ -22,9 +23,9 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault("is_superuser", True)
 
         if extra_fields.get("is_staff") is not True:
-            raise ValueError("Superuser must have is_staff=True.")
+            raise ValueError(_("Superuser must have is_staff=True."))
         if extra_fields.get("is_superuser") is not True:
-            raise ValueError("Superuser must have is_superuser=True.")
+            raise ValueError(_("Superuser must have is_superuser=True."))
 
         return self.create_user(username, password, **extra_fields)
 
@@ -33,7 +34,7 @@ class CustomUserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    username = models.CharField(max_length=150, unique=True)
+    username = models.CharField(max_length=150, unique=True, verbose_name=_("Username"),)
     is_staff = models.BooleanField(default=False)  # Required for admin access
     is_active = models.BooleanField(default=True)  # Required for login
 
@@ -44,14 +45,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         Group,
         related_name="custom_user_groups",
         blank=True,
-        help_text="The groups this user belongs to.",
+        help_text=_("The groups this user belongs to."),
         verbose_name="groups",
     )
     user_permissions = models.ManyToManyField(
         Permission,
         related_name="custom_user_permissions",
         blank=True,
-        help_text="Specific permissions for this user.",
+        help_text=_("Specific permissions for this user."),
         verbose_name="user permissions",
     )
 
@@ -64,7 +65,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     @classmethod
     def create(cls, username, password=None, **extra_fields):
         if not username:
-            raise ValueError("Username is required")
+            raise ValueError(_("Username is required"))
         user = cls(username=username, **extra_fields)
         user.set_password(password)
         user.save()

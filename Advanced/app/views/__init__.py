@@ -7,6 +7,7 @@ from .logout import *
 from .favorites import *
 from .register import *
 from .publish import *
+from .lang import *
 
 
 # from .translate import *

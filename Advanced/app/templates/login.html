@@ -1,19 +1,20 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% load static %}
 {% load django_bootstrap5 %}
 
-{% block title %}Blog Site - Login{% endblock %}
+{% block title %}{% trans "Blog Site - Login" %}{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center mt-4 mx-2">
   <div class="col-md-6 col-lg-4">
-    <h2 class="text-center mb-4" role="heading">Log In</h2>
+    <h2 class="text-center mb-4" role="heading">{% trans "Log In" %}</h2>
     <form method="post" action="{% url 'app:login' %}?{% if request.GET.next %}next={{ request.GET.next }}{% endif %}" class="bg-light p-5 rounded shadow-lg" role="form">
       {% csrf_token %}
       {% bootstrap_form form layout='vertical' show_labels=True show_help=True %}
       <div class="d-flex justify-content-between mt-4">
-        <a href="{{ request.META.HTTP_REFERER|default:cancel_url }}" class="btn btn-secondary w-100 me-2">Cancel</a>
+        <a href="{{ request.META.HTTP_REFERER|default:cancel_url }}" class="btn btn-secondary w-100 me-2">{% trans "Cancel" %}</a>
         {% bootstrap_button button_type="submit" content="Log In" button_class="btn btn-primary w-100 ms-2" %}
       </div>
     </form>

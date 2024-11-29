@@ -1,5 +1,6 @@
 from django.db import models
 from .user import *
+from django.utils.translation import gettext_lazy as _
 
 
 class Article(models.Model):
@@ -16,7 +17,7 @@ class Article(models.Model):
     def create(cls, data):
         author = data.get("author")
         if not User.exists(author.username):
-            raise ValueError("Author does not exist in the system")
+            raise ValueError(_("Author does not exist in the system"))
 
         return cls.objects.create(**data)
 

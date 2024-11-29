@@ -1,4 +1,6 @@
 {% load static %}
+{% load i18n %}
+
 <div class="row align-items-center pb-4">
     <div class="col-auto">
         <a class="nav-link text-dark" href="{% url 'app:articles' %}">
@@ -6,7 +8,16 @@
         </a>
     </div>
     <div class="col-auto align-self-end p-0">
-        <p class="fw-light fs-4 text-muted mb-0">Share your writings</p>
+        <p class="fw-light fs-4 text-muted mb-0">{% trans "Share your writings" %}</p>
+    </div>
+    <div class="col-auto ms-auto me-1">
+        <a href="{% url 'app:switch_language' %}?next={{ request.path }}" class="btn btn-light">
+            {% if request.LANGUAGE_CODE == 'en' %}
+                🇫🇷 Français
+            {% else %}
+                🇬🇧 English
+            {% endif %}
+        </a>
     </div>
 </div>
 <nav class="navbar navbar-expand-lg p-0 navbar-dark rounded" style="background-color: #212529;">
@@ -20,36 +31,36 @@
                     <i class="bi bi-files icon-fill text-secondary" style="font-size: 1.5rem;"></i>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link p-3 {% if request.resolver_match.url_name == 'articles' and user.is_authenticated %}active{% endif %}" href="{% url 'app:articles' %}">Articles</a>
+                    <a class="nav-link p-3 {% if request.resolver_match.url_name == 'articles' and user.is_authenticated %}active{% endif %}" href="{% url 'app:articles' %}">{% trans "Articles" %}</a>
                 </li>
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link p-3 {% if request.resolver_match.url_name == 'favorites' %}active{% endif %}" href="{% url 'app:favorites' %}">Favourites</a>
+                        <a class="nav-link p-3 {% if request.resolver_match.url_name == 'favorites' %}active{% endif %}" href="{% url 'app:favorites' %}">{% trans "Favorites" %}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link p-3 {% if request.resolver_match.url_name == 'publications' %}active{% endif %}" href="{% url 'app:publications' %}">Publications</a>
+                        <a class="nav-link p-3 {% if request.resolver_match.url_name == 'publications' %}active{% endif %}" href="{% url 'app:publications' %}">{% trans "Publications" %}</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link p-3 {% if request.resolver_match.url_name == 'register' %}active{% endif %}" href="{% url 'app:register' %}">Register</a>
+                        <a class="nav-link p-3 {% if request.resolver_match.url_name == 'register' %}active{% endif %}" href="{% url 'app:register' %}">{% trans "Register" %}</a>
                     </li>
                 {% endif %}
             </ul>
             <ul class="navbar-nav ms-auto">
                 {% if user.is_authenticated %}
                     <li class="mx-2">
-                        <span class="nav-link">Logged as {{ user.username }}</span>
+                        <span class="nav-link">{% trans "Logged as" %} {{ user.username }}</span>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'app:logout' %}">Logout</a>
+                        <a class="nav-link" href="{% url 'app:logout' %}">{% trans "Logout" %}</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
                         <form action="{% url 'app:login_nav' %}" method="post" class="d-flex">
                             {% csrf_token %}
-                            <input type="text" name="username" class="form-control me-2" placeholder="Username" required>
-                            <input type="password" name="password" class="form-control me-2" placeholder="Password" required>
-                            <button type="submit" class="btn btn-light">Login</button>
+                            <input type="text" name="username" class="form-control me-2" placeholder="{% trans "Username" %}" required>
+                            <input type="password" name="password" class="form-control me-2" placeholder="{% trans "Password" %}" required>
+                            <button type="submit" class="btn btn-light">{% trans "Login" %}</button>
                         </form>
                     </li>
                 {% endif %}

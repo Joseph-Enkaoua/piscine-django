@@ -1,6 +1,4 @@
 from django import forms
-from django.db import IntegrityError
-from django.shortcuts import redirect
 from app.models import UserFavoriteArticle
 
 

@@ -1,18 +1,19 @@
 from django import forms
 from app.models import User
+from django.utils.translation import gettext_lazy as _
 
 
 class LoginForm(forms.Form):
     username = forms.CharField(
         max_length=24,
         widget=forms.TextInput(
-            attrs={"placeholder": "Username", "class": "form-control"}
+            attrs={"placeholder": _("Username"), "class": "form-control"}
         ),
     )
     password = forms.CharField(
         max_length=128,
         widget=forms.PasswordInput(
-            attrs={"placeholder": "Password", "class": "form-control"}
+            attrs={"placeholder": _("Password"), "class": "form-control"}
         ),
     )
 
@@ -43,9 +44,9 @@ class LoginForm(forms.Form):
         password = cleaned_data.get("password")
 
         if not User.exists(username):
-            self.add_error("username", "Username does not exist.")
+            self.add_error("username", _("Username does not exist."))
         else:
             user = User.fetch(username)
             if not user.check_password(password):
-                self.add_error("password", "Incorrect password.")
+                self.add_error("password", _("Incorrect password."))
         return cleaned_data

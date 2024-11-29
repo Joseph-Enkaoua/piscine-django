@@ -1,6 +1,7 @@
 from django.db import models
 from .user import *
 from .article import *
+from django.utils.translation import gettext_lazy as _
 
 
 class UserFavoriteArticle(models.Model):
@@ -20,5 +21,5 @@ class UserFavoriteArticle(models.Model):
     @classmethod
     def create(cls, user, article):
         if cls.exists(user, article):
-            raise Exception("Article is already in user's favorites list.")
+            raise Exception(_("Article is already in user's favorites list."))
         return cls.objects.create(user=user, article=article)

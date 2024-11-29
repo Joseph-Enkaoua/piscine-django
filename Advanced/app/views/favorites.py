@@ -6,6 +6,7 @@ from django.views.generic.edit import CreateView
 from app.forms import AddToFavForm
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
+from django.utils.translation import gettext_lazy as _
 
 
 class FavoritesListView(LoginRequiredMixin, ListView):
@@ -33,5 +34,5 @@ class AddToFavoriteView(LoginRequiredMixin, CreateView):
         try:
             form.save()
         except IntegrityError:
-            messages.error(self.request, "Error: Article is already in your favorites.")
+            messages.error(self.request, _("Error: Article is already in your favorites."))
         return redirect("app:article_detail", pk=self.kwargs['pk'])

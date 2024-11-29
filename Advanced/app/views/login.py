@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, resolve_url
 from django.contrib import messages
 from app.middleware import RedirectIfAuthenticatedMixin
+from django.utils.translation import gettext_lazy as _
 
 
 class LoginFormView(RedirectIfAuthenticatedMixin, FormView):
@@ -43,7 +44,7 @@ class LoginNavFormView(FormView):
             return redirect(next_url)
         return self.form_invalid(form)
 
-    def form_invalid(self, _):
-        messages.error(self.request, "Invalid username or password. Please try again.")
+    def form_invalid(self, form):
+        messages.error(self.request, _("Invalid username or password. Please try again."))
         referer_url = self.request.META.get("HTTP_REFERER", self.success_url)
         return redirect(referer_url)

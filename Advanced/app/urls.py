@@ -16,4 +16,5 @@ urlpatterns = [
     path("register/", RegisterView.as_view(), name="register"),
     path("publish/", PublishArticleView.as_view(), name="publish"),
     path("add-to-favorite/<int:pk>/", AddToFavoriteView.as_view(), name="add_to_favorite"),
+    path("switch-language", SwitchLanguageView.as_view(), name="switch_language")
 ]

@@ -1,12 +1,13 @@
 {% load django_bootstrap5 %}
+{% load i18n %}
 
 {% if user.is_authenticated and not is_favorited %}
-    <form method="post" class="bg-light p-5 rounded" action="{% url 'app:add_to_favorite' article.pk %}">
+    <form method="post" class="bg-light p-5 rounded bg-white" action="{% url 'app:add_to_favorite' article.pk %}">
         {% csrf_token %}
         <input type="hidden" name="next" value="{{ request.META.HTTP_REFERER|default:request.path }}">
         {% bootstrap_form form %}
-        <button type="submit" class="btn btn-warning">Add to favorites</button>
+        <button type="submit" class="btn btn-warning">{% trans "Add to favorites" %}</button>
     </form>
 {% elif user.is_authenticated %}
-    <p class="alert alert-info mt-3">This article is in your favorites.</p>
+    <p class="alert alert-info mt-3">{% trans "This article is in your favorites." %}</p>
 {% endif %}
