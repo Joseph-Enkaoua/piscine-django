@@ -1,5 +1,6 @@
 from django import forms
 from app.models import UserFavoriteArticle
+from django.utils.translation import gettext_lazy as _
 
 
 class AddToFavForm(forms.ModelForm):
@@ -12,10 +13,8 @@ class AddToFavForm(forms.ModelForm):
         self.article = kwargs.pop('article')
         super().__init__(*args, **kwargs)
 
-    def save(self, commit=True):
-        favorite = super().save(commit=False)
-        favorite.user = self.user
-        favorite.article = self.article
-        if commit:
-            favorite.save()
-        return favorite
+    def clean(self):
+        cleaned_data = super().clean()
+        if UserFavoriteArticle.exists(self.user, self.article):
+            raise forms.ValidationError(_("This article is already in your favorites."))
+        return cleaned_data
