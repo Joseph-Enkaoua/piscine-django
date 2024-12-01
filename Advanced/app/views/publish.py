@@ -6,7 +6,7 @@ from app.models import Article
 
 class PublishArticleView(LoginRequiredMixin, CreateView):
     model = Article
-    fields = ['title', 'content']
+    fields = ['title', 'synopsis', 'content']
     template_name = "publish.html"
     success_url = reverse_lazy("app:publications")
 
