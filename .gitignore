@@ -411,3 +411,4 @@ Advanced/app/migrations/0001_initial.py
 Sessions/d06/ex/migrations/0001_initial.py
 */.vscode/*
 Advanced/app/migrations/0003_alter_userfavoritearticle_unique_together_and_more.py
+Final/d09/db.sqlite3

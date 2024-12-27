@@ -1,0 +1,71 @@
+{% load static %}
+{% load bootstrap5 %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>DO9 - Account</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+	{% bootstrap_css %}
+	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+</head>
+<body>
+	<div class="navbar navbar-light bg-light">
+		<div class="container-fluid d-flex justify-content-between align-items-center position-relative">
+			<a class="navbar-brand" href="{% url 'account:index' %}">D09</a>
+			<div id="logout-btn-navbar" class="ml-auto position-relative">
+				<button type="button" id="logout-btn" class="btn btn-outline-secondary">Logout</button>
+			</div>
+		</div>
+	</div>
+
+	{% if messages %}
+		<div class="container mt-4">
+			<div class="alert alert-warning">
+				{% for message in messages %}
+					<p class="m-2">{{ message }}</p>
+				{% endfor %}
+			</div>
+		</div>
+	{% endif %}
+
+	<div id="user-info" style="height: 300px; display: flex; justify-content: center; align-items: center;">
+		<span id="logged-in-msg"></span>
+	</div>
+
+
+	<div id="login-section">
+		<div class="d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 56px);">
+			<div class="container" style="max-width: 500px; width: 100%;">
+				<h1 class="text-center">Login</h1>
+				<form id="login-form" method="post">
+					{% csrf_token %}
+					<div id="form-errors" class="text-danger text-center"></div>
+					<div class="form-group mt-3">
+						<label for="username" class="form-label">Username:</label>
+						<input type="text" id="username" name="username" class="form-control" value="" required>
+					</div>
+					<div class="form-group mt-3">
+						<label for="password" class="form-label">Password:</label>
+						<input type="password" id="password" name="password" class="form-control" required>
+					</div>
+					<button type="submit" class="btn btn-light w-100 my-4">Login</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+
+	<script>
+		var loginUrl = "{% url 'account:login' %}"
+		var logoutUrl = "{% url 'account:logout' %}"
+		var statusUrl = "{% url 'account:index' %}"
+	</script>
+	{% bootstrap_javascript %}
+	<script src="{% static 'js/account.js' %}"></script>
+	
+</body>
+
+</html>
