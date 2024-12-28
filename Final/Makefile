@@ -6,14 +6,22 @@ NC = \033[0m
 PYTHON_PATH = python3
 
 django-clean:
-	@echo "$(INFO)[INFO] Cleaning up Django app$(NC)"
-	@echo "----------------------------------------"
-	# find  app/migrations/ -type f ! -name '__init__.py' -exec rm -f {} +
+	@echo "$(INFO)[INFO] stopping Redis container$(NC)"
+	docker stop redis
+	# @echo "$(INFO)[INFO] Cleaning up Django app$(NC)"
+	# @echo "----------------------------------------"
+	# find  chat/migrations/ -type f ! -name '__init__.py' -exec rm -f {} +
 
 django-run:
+	@if docker container inspect -f '{{.State.Running}}' redis 2>/dev/null | grep -q true; then \
+		echo "$(INFO)[INFO] Redis is already running$(NC)"; \
+	else \
+		echo "$(INFO)[INFO] Starting Redis instance$(NC)"; \
+		docker run -d --rm -p 6379:6379 --name redis redis:7; \
+	fi
 	@echo "$(INFO)[INFO] Running Django app$(NC)"
 	@echo "----------------------------------------"
-	@pip3 install -r requirements.txt
+	pip3 install -r requirements.txt
 	$(PYTHON_PATH) ./d09/manage.py makemigrations
 	$(PYTHON_PATH) ./d09/manage.py migrate
 	sleep 1
@@ -21,7 +29,8 @@ django-run:
 	$(PYTHON_PATH) ./d09/manage.py runserver
 
 data-clean:
-	if [ -e db.sqlite3 ]; then \
+	@if [ -e db.sqlite3 ]; then \
+		echo "Deleting db.sqlite3..."; \
 		rm db.sqlite3; \
 	else \
 		echo "db.sqlite3 not found, skipping deletion."; \
