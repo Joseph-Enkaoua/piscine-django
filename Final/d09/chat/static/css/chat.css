@@ -1,5 +1,8 @@
 #chat-container {
+    display: flex;
+    flex-direction: column;
     width: 500px;
+    height: 500px;
     margin: auto;
     padding: 20px;
     border: 1px solid #ccc;
@@ -7,7 +10,7 @@
 }
 
 #chat-messages {
-    height: 400px;
+    margin-top: auto;
     overflow-y: scroll;
     border-bottom: 1px solid #ccc;
     padding-bottom: 10px;
@@ -45,7 +48,6 @@
 
 .msg-area.current-user {
     align-items: flex-end;
-    /* text-align: right; */
     display: flex;
 }
 
