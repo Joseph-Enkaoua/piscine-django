@@ -11,32 +11,30 @@
     overflow-y: scroll;
     border-bottom: 1px solid #ccc;
     padding-bottom: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
-
-#chat-messages::-webkit-scrollbar {
-    display: none;
 }
 
 .message {
     display: inline-block;
     padding: 8px 12px;
     margin: 5px 0;
-    border-radius: 5px;
+    border-radius: 10px;
     word-wrap: break-word;
     max-width: 70%;
 }
 
 .message.current-user {
     background-color: #eefef2;
+    margin-left: auto;
 }
 
 .message.other-user {
     background-color: #f2f2f2;
+}
+
+.message.system-message {
+    padding: 2px 7px;
+    color: #ffffff;
+    background-color: #909090;
 }
 
 #chat-messages p {
@@ -46,11 +44,16 @@
 }
 
 .msg-area.current-user {
-    align-self: flex-end;
-    text-align: right;
+    align-items: flex-end;
+    /* text-align: right; */
+    display: flex;
 }
 
 .msg-area.other-user {
-    align-self: flex-start;
-    text-align: left;
+    align-items: flex-start;
+}
+
+.msg-area.system-message {
+    align-self: center;
+    text-align: center;
 }

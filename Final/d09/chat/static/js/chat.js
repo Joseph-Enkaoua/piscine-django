@@ -36,7 +36,8 @@ $(document).ready(function() {
 
   function displayMessage(data) {
     const isCurrentUser = data.user === username;
-    const messageClass = isCurrentUser ? 'current-user' : 'other-user';
+    let messageClass = isCurrentUser ? 'current-user' : 'other-user';
+    messageClass = data.user === 'system' ? 'system-message' : messageClass;
 
     const messageElement = `
       <div class="w-100 msg-area ${messageClass}">
@@ -48,8 +49,8 @@ $(document).ready(function() {
 
     $('#chat-messages').append(messageElement);
 
-    if (isCurrentUser) {
-      $('#chat-messages .msg-area.current-user p').last().remove();
+    if (isCurrentUser || data.user === 'system') {
+      $('#chat-messages p').last().remove();
     }
 
     $('#chat-messages').scrollTop($('#chat-messages')[0].scrollHeight);

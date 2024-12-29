@@ -29,6 +29,11 @@ class ChatConsumer(WebsocketConsumer):
 
     self.accept()
 
+    message = self.user.username + " has joined the chat"
+    async_to_sync(self.channel_layer.group_send)(
+      self.room_group_name, {"type": "chat.message", "message": message, "user": "system" }
+    )
+
 
   def disconnect(self, code):
     async_to_sync(self.channel_layer.group_discard)(
@@ -36,6 +41,11 @@ class ChatConsumer(WebsocketConsumer):
     )
 
     self.room.users.remove(self.scope["user"])
+
+    message = self.user.username + " has left the chat"
+    async_to_sync(self.channel_layer.group_send)(
+      self.room_group_name, {"type": "chat.message", "message": message, "user": "system" }
+    )
 
 
   def receive(self, text_data):
