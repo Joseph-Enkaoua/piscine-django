@@ -18,3 +18,8 @@ class ChatMessage(models.Model):
 
   def __str__(self):
     return self.content
+  
+  @classmethod
+  def get_last_3_msg(cls, room):
+    return cls.objects.filter(room=room).order_by("-timestamp")[:3][::-1]
+

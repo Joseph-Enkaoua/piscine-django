@@ -8,8 +8,10 @@ $(document).ready(function() {
           $('#login-section').hide();
           $('#logout-btn-navbar').show();
           $('#user-info').show();
+          $('#chat-section').show();
           $('#logged-in-msg').text('Logged as ' + response.username);
         } else {
+          $('#chat-section').hide();
           $('#logout-btn-navbar').hide();
           $('#user-info').hide();
           $('#logged-in-msg').text('');
@@ -17,6 +19,7 @@ $(document).ready(function() {
         }
       },
       error: function() {
+        $('#chat-section').hide();
         $('#username').val('');
         $('#password').val('');
         $('#logout-btn-navbar').hide();

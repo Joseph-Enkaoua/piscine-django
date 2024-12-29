@@ -31,7 +31,7 @@
 	{% endif %}
 
 	<div id="user-info" style="height: 300px; display: flex; justify-content: center; align-items: center;">
-		<span id="logged-in-msg"></span>
+		<h4 id="logged-in-msg"></h4>
 	</div>
 
 
@@ -56,7 +56,17 @@
 		</div>
 	</div>
 
-
+	<div id="chat-section" style="display: none;">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-8">
+					<h1 class="my-4 text-center">Go check out available Chat Rooms</h1>
+					<br>
+					<a href="{% url 'chat:index' %}" class="btn btn-light w-100">Chat Rooms</a>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<script>
 		var loginUrl = "{% url 'account:login' %}"

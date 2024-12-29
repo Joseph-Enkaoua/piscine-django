@@ -9,7 +9,14 @@ $(document).ready(function() {
   // Event listener for receiving messages
   socket.addEventListener('message', (event) => {
     const data = JSON.parse(event.data);
-    displayMessage(data);
+    if (data.type === "chat-message") {
+      displayMessage(data);
+    } else if (data.type === "chat-users") {
+      $('#user-table').empty();
+      data.list.forEach(element => {
+        displayChatUsers(element);
+      });
+    }
   });
 
   // Event listener for connection close
@@ -54,7 +61,11 @@ $(document).ready(function() {
     }
 
     $('#chat-messages').scrollTop($('#chat-messages')[0].scrollHeight);
-}
+  }
+
+  function displayChatUsers(username) {
+    $('#user-table').append(`<li class="list-group-item">${username}</li>`);
+  }
 
   // Handle logout button
   $('#logout-btn').on('click', function() {

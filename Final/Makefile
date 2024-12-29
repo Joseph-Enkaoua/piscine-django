@@ -6,11 +6,12 @@ NC = \033[0m
 PYTHON_PATH = python3
 
 django-clean:
-	@echo "$(INFO)[INFO] stopping Redis container$(NC)"
-	docker stop redis
-	# @echo "$(INFO)[INFO] Cleaning up Django app$(NC)"
-	# @echo "----------------------------------------"
-	# find  chat/migrations/ -type f ! -name '__init__.py' -exec rm -f {} +
+	@if docker container inspect -f '{{.State.Running}}' redis 2>/dev/null | grep -q true; then \
+		echo "$(INFO)[INFO] Stopping Redis container$(NC)"; \
+		docker stop redis; \
+	else \
+		echo "$(INFO)[INFO] Redis container was not found$(NC)"; \
+	fi
 
 django-run:
 	@if docker container inspect -f '{{.State.Running}}' redis 2>/dev/null | grep -q true; then \
@@ -22,18 +23,18 @@ django-run:
 	@echo "$(INFO)[INFO] Running Django app$(NC)"
 	@echo "----------------------------------------"
 	pip3 install -r requirements.txt
-	$(PYTHON_PATH) ./d09/manage.py makemigrations
+	$(PYTHON_PATH) ./d09/manage.py makemigrations account chat
 	$(PYTHON_PATH) ./d09/manage.py migrate
 	sleep 1
 	$(PYTHON_PATH) ./d09/manage.py populate
 	$(PYTHON_PATH) ./d09/manage.py runserver
 
 data-clean:
-	@if [ -e db.sqlite3 ]; then \
-		echo "Deleting db.sqlite3..."; \
-		rm db.sqlite3; \
+	@if [ -e ./d09/db.sqlite3 ]; then \
+		rm ./d09/db.sqlite3; \
+		echo "$(INFO)[INFO] Deleted ./d09/db.sqlite3$(NC)"; \
 	else \
-		echo "db.sqlite3 not found, skipping deletion."; \
+		echo "$(INFO)[INFO] ./d09/db.sqlite3 not found, skipping deletion$(NC)"; \
 	fi
 
 
